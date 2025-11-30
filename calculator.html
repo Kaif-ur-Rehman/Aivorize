@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Calculator - Aivorize</title>
+  <meta name="description" content="Use the Aivorize Calculator — a fast, elegant, and ad-free online calculator for everyday use. Designed for clarity, precision, and performance." />
+  <meta name="keywords" content="calculator, online calculator, math tools, Aivorize, premium calculator, free calculator, fast calculator, scientific calculator" />
+  <meta name="author" content="Kaif-ur-Rehman" />
+  <meta property="og:title" content="Calculator - Aivorize | Smart, Fast & Premium Online Calc" />
+  <meta property="og:description" content="Experience a beautiful, precise, and fast online calculator built by Aivorize — for effortless calculations, anywhere." />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Aivorize" />
+  <meta property="og:url" content="https://aivorize.netlify.app/calculator" />
+  <meta property="og:image" content="https://aivorize.netlify.app/faviconnob.png" />
+  <meta name="theme-color" content="#0ea5e9" />
+
+  <link rel="icon" type="image/png" href="faviconnob.png" />
+  <link rel="canonical" href="https://aivorize.netlify.app/calculator" />
+
+  <!-- Tailwind & Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8PS60F1CVW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-8PS60F1CVW');
+  </script>
+  <!-- End Google Analytics -->
+   
+  <!-- Google AdSense -->
+<script async
+  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3918862480266328"
+  crossorigin="anonymous">
+</script>
+<!-- End Google AdSense -->
+
+  <!-- Aivorize SEO Enhancement -->
+   <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://aivorize.netlify.app/#organization",
+        "name": "Aivorize",
+        "url": "https://aivorize.netlify.app/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://aivorize.netlify.app/faviconnob.png"
+        },
+        "founder": {
+          "@type": "Person",
+          "name": "Kaif ur Rehman"
+        },
+        "sameAs": [
+          "https://www.youtube.com/@aivorize",
+          "https://www.instagram.com/aivorize/",
+          "https://www.tiktok.com/@aivorizeofficial",
+          "https://www.youtube.com/@kaif-ur-rehman",
+          "https://www.instagram.com/kaif.ur.rehman/",
+          "https://www.tiktok.com/@kaif.urrehman"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://aivorize.netlify.app/#website",
+        "url": "https://aivorize.netlify.app/",
+        "name": "Aivorize",
+        "description": "Aivorize – a modern suite of 15+ free online tools and calculators designed by Kaif ur Rehman for simplicity and performance.",
+        "publisher": { "@id": "https://aivorize.netlify.app/#organization" },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://aivorize.netlify.app/search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://aivorize.netlify.app/about#webpage",
+        "url": "https://aivorize.netlify.app/about",
+        "name": "About Aivorize – Vision, Mission & Creator | Kaif ur Rehman",
+        "isPartOf": { "@id": "https://aivorize.netlify.app/#website" },
+        "about": { "@id": "https://aivorize.netlify.app/#organization" },
+        "description": "Learn more about Aivorize — a vision by Kaif ur Rehman to create simple, elegant, and powerful digital tools for everyone."
+      }
+    ]
+  }
+  </script>
+</head>
+
+  <style>
+    /* Define the custom Aivorize Blue */
+    .aivorize-blue {
+        background-color: #1E88E5; /* A bright, professional blue */
+    }
+    .aivorize-blue-text {
+        color: #1E88E5;
+    }
+    .aivorize-blue-hover:hover {
+        background-color: #1565C0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      /* Light Mode Base */
+      background-color: #fcfdfe; /* Off-white for a softer look */
+      color: #1f2937;
+      scroll-behavior: smooth;
+    }
+    .glass-header {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background-color: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 1px 12px rgba(0,0,0,0.03);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .section-title {
+      font-family: 'Outfit', sans-serif;
+    }
+    .gradient-text {
+      background: linear-gradient(to right, #1E88E5, #00C853);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    /* Base style for all calculator buttons */
+    .calc-btn-base {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 9999px; /* rounded-full */
+      font-size: 1.875rem; /* text-3xl */
+      font-weight: 500; /* font-medium */
+      transition: all 0.1s ease-out; /* Smooth transitions for click feedback */
+      aspect-square: 1 / 1; /* Makes it a perfect circle */
+      user-select: none; /* Prevent selection on mobile */
+    }
+    /* Visual Click Feedback */
+    .btn-number:active { background-color: #C0C0C4 !important; }
+    .btn-function:active { background-color: #ADADBA !important; }
+    .btn-operator:active { background-color: #1565C0 !important; }
+
+    /* Operator Active State (Blue Text/Background) */
+    .operator-active { 
+        background-color: white !important;
+        color: #1E88E5 !important;
+    }
+
+    .history-item:hover {
+      background-color: #f3f4f6;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body class="selection:bg-blue-200 transition-colors duration-500">
+
+  <header class="glass-header fixed top-0 left-0 right-0 h-16 flex items-center px-4 md:px-6 z-50">
+    <div class="flex items-center space-x-2">
+      <img src="faviconnob.png" alt="Aivorize Logo" class="w-8 h-8 rounded-lg shadow-md" />
+      <a href="index.html" class="text-xl font-extrabold text-gray-900 hover:text-blue-600 transition-colors">Aivorize</a>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto pt-28 pb-20 px-4 md:px-6">
+    <section class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-extrabold section-title gradient-text mb-4">Calculator</h1>
+      <p class="text-gray-600 max-w-2xl mx-auto text-lg">Fast, lightweight, and responsive calculator with history and keyboard support.</p>
+    </section>
+
+    <div class="flex flex-col md:flex-row gap-6">
+
+      <div class="flex-1 bg-white p-6 rounded-2xl shadow-xl">
+        <div class="mb-4">
+          <div id="calc-preview" class="w-full text-right h-8 pr-4 text-xl font-medium text-gray-400 overflow-x-auto whitespace-nowrap"></div>
+          
+          <input id="calc-display" type="text" readonly value="0" class="w-full text-right p-4 text-6xl font-light border-none rounded-lg bg-gray-50 text-gray-900" />
+        </div>
+        
+        <div class="grid grid-cols-4 gap-3">
+          <button class="calc-btn-base btn-function bg-gray-300 text-gray-900 hover:bg-gray-400" id="calc-clear">AC</button>
+          <button class="calc-btn-base btn-function bg-gray-300 text-gray-900 hover:bg-gray-400" id="calc-back">DEL</button>
+          <button class="calc-btn-base btn-function bg-gray-300 text-gray-900 hover:bg-gray-400" data-value="%">%</button>
+          <button class="calc-btn-base btn-operator aivorize-blue text-white aivorize-blue-hover" data-value="/">÷</button>
+
+          <button class="calc-btn-base btn-number bg-gray-200 text-gray-900 hover:bg-gray-300" data-value="7">7</button>
+          <button class="calc-btn-base btn-number bg-gray-200 text-gray-900 hover:bg-gray-300" data-value="8">8</button>
+          <button class="calc-btn-base btn-number bg-gray-200 text-gray-900 hover:bg-gray-300" data-value="9">9</button>
+          <button class="calc-btn-base btn-operator aivorize-blue text-white aivorize-blue-hover" data-value="*">×</button>
+
+          <button class="calc-btn-base btn-number bg-gray-200 text-gray-900 hover:bg-gray-300" data-value="4">4</button>
+          <button class="calc-btn-base btn-number bg-gray-200 text-gray-900 hover:bg-gray-300" data-value="5">5</button>
+          <button class="calc-btn-base btn-number bg-gray-200 text-gray-900 hover:bg-gray-300" data-value="6">6</button>
+          <button class="calc-btn-base btn-operator aivorize-blue text-white aivorize-blue-hover" data-value="-">−</button>
+
+          <button class="calc-btn-base btn-number bg-gray-200 text-gray-900 hover:bg-gray-300" data-value="1">1</button>
+          <button class="calc-btn-base btn-number bg-gray-200 text-gray-900 hover:bg-gray-300" data-value="2">2</button>
+          <button class="calc-btn-base btn-number bg-gray-200 text-gray-900 hover:bg-gray-300" data-value="3">3</button>
+          <button class="calc-btn-base btn-operator aivorize-blue text-white aivorize-blue-hover" data-value="+">+</button>
+
+          <button class="calc-btn-base btn-function bg-gray-300 text-gray-900 hover:bg-gray-400" data-value="neg">±</button>
+          <button class="calc-btn-base btn-number bg-gray-200 text-gray-900 hover:bg-gray-300" data-value="0">0</button>
+          <button class="calc-btn-base btn-number bg-gray-200 text-gray-900 hover:bg-gray-300" data-value=".">.</button>
+          <button class="calc-btn-base btn-operator aivorize-blue text-white aivorize-blue-hover" id="calc-equal">=</button>
+        </div>
+      </div>
+
+
+      <div class="w-full md:w-80 bg-white p-4 rounded-2xl shadow-xl flex flex-col">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-lg font-semibold text-gray-900">History</h2>
+          <button id="clear-history" class="font-medium text-blue-600 hover:text-blue-500 hover:underline">Clear</button>
+        </div>
+        <div id="history-list" class="flex-1 overflow-y-auto space-y-2 text-gray-600"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-white border-t border-gray-200 mt-16">
+    <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 text-sm text-gray-600">
+      <div>
+        <div class="flex items-center space-x-2 mb-4">
+          <img src="faviconnob.png" alt="Aivorize Logo" class="w-8 h-8 rounded-lg shadow-md">
+          <h2 class="text-lg font-bold text-gray-900">Aivorize</h2>
+        </div>
+        <p class="text-gray-500 leading-relaxed">Aivorize is your premium hub for free online tools, calculators, and productivity utilities — crafted for speed, simplicity, and elegance.</p>
+        <p class="mt-4 text-gray-500">Designed & built by <a href="https://kaifurrehman.netlify.app/" target="_blank" class="text-blue-600 font-medium hover:underline">Kaif ur Rehman</a>.</p>
+      </div>
+      <div>
+        <h3 class="text-base font-semibold text-gray-800 mb-3">Quick Links</h3>
+        <ul class="space-y-2">
+          <li><a href="about.html" class="hover:text-blue-600 transition-colors">About</a></li>
+          <li><a href="privacy.html" class="hover:text-blue-600 transition-colors">Privacy Policy</a></li>
+          <li><a href="terms.html" class="hover:text-blue-600 transition-colors">Terms & Conditions</a></li>
+          <li><a href="learn.html" class="hover:text-blue-600 transition-colors">Learn</a></li>
+          <li><a href="contact.html" class="hover:text-blue-600 transition-colors">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-base font-semibold text-gray-800 mb-3">Connect With Us</h3>
+        <div class="flex space-x-4 text-lg">
+          <a href="https://www.youtube.com/@aivorize" target="_blank" class="hover:text-red-600"><i class="fab fa-youtube"></i></a>
+          <a href="https://www.instagram.com/aivorize" target="_blank" class="hover:text-pink-600"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.tiktok.com/@aivorizeofficial" target="_blank" class="hover:text-black"><i class="fab fa-tiktok"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="border-t border-gray-100 py-4">
+      <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-500">
+        <p>&copy; <span id="currentYear"></span> Aivorize. All rights reserved.</p>
+        <p class="mt-2 sm:mt-0">Crafted with ❤️ by <a href="https://kaifurrehman.netlify.app/" target="_blank" class="text-blue-600 hover:underline font-medium">Kaif ur Rehman</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+    const display = document.getElementById("calc-display");
+    const preview = document.getElementById("calc-preview");
+    const historyList = document.getElementById("history-list");
+    let currentExpression = ''; // The full expression string (e.g., '12+5*3')
+    let lastResult = '0';      // The result of the last successful calculation
+    let history = JSON.parse(localStorage.getItem('calcHistory') || '[]');
+
+    const OPERATORS = ['+', '-', '*', '/'];
+
+    // --- Core Functions ---
+
+    // Safely evaluates the expression for the live preview
+    function safeEvaluate(expression) {
+        if (!expression) return '';
+        // Replace display symbols with code symbols
+        let safeInput = expression.replace(/×/g, '*').replace(/÷/g, '/');
+        // Handle trailing operator for live preview
+        const lastChar = safeInput.slice(-1);
+        if (OPERATORS.includes(lastChar)) {
+            safeInput = safeInput.slice(0, -1); // Remove trailing operator for safe evaluation
+        }
+        
+        try {
+            // Use new Function() for safer evaluation
+            // The toPrecision(10) is a nice trick to limit long decimals in the preview
+            const result = new Function('return ' + safeInput)();
+            if (!isFinite(result)) return 'Error';
+            return result.toPrecision(10).replace(/\.0+$/, ''); // Clean up trailing zeros
+        } catch {
+            return ''; // No result to show yet
+        }
+    }
+
+    // Updates both the live preview and the main display
+    function updateDisplays() {
+        const liveResult = safeEvaluate(currentExpression);
+        
+        // Update the expression preview
+        preview.textContent = currentExpression.replace(/\*/g, '×').replace(/\//g, '÷');
+        preview.scrollLeft = preview.scrollWidth; // Scroll to the end
+        
+        // Update the main display
+        if (liveResult && !OPERATORS.includes(currentExpression.slice(-1)) && currentExpression.length > 0) {
+            display.value = liveResult;
+            lastResult = liveResult;
+        } else {
+             // If typing a number or an operator, show the last part of the expression or last result
+             const parts = currentExpression.split(/[\+\-\*\/]/);
+             const lastPart = parts.pop() || '';
+             display.value = lastPart || lastResult || '0';
+        }
+    }
+
+    function setActiveOperator(button) {
+        // Clear all active operator states
+        document.querySelectorAll('.btn-operator').forEach(btn => {
+            btn.classList.remove('operator-active');
+            btn.classList.add('aivorize-blue'); // Ensure it's blue
+            btn.classList.remove('aivorize-blue-text'); // Ensure text is white
+            btn.classList.add('text-white');
+        });
+        
+        // Set the new button to active state (blue text, white background)
+        if (button) {
+            button.classList.add('operator-active');
+            button.classList.remove('aivorize-blue');
+            button.classList.add('aivorize-blue-text');
+            button.classList.remove('text-white');
+        }
+    }
+
+    // --- History Functions (Unchanged) ---
+    function addHistory(entry) {
+        history.push(entry);
+        if (history.length > 50) history.shift();
+        localStorage.setItem('calcHistory', JSON.stringify(history));
+        renderHistory();
+    }
+
+    function renderHistory() {
+        historyList.innerHTML = '';
+        history.slice().reverse().forEach(item => {
+            const div = document.createElement('div');
+            div.textContent = item;
+            div.className = 'history-item p-2 rounded';
+            div.onclick = () => { 
+                // Instant History Recall (loads the result only)
+                const result = item.split('=').pop().trim();
+                currentExpression = result; 
+                lastResult = result;
+                updateDisplays(); 
+            };
+            // Note: Double-click (loading the formula) would require more complex logic
+            historyList.appendChild(div);
+        });
+    }
+
+    // --- Event Listeners ---
+
+    document.querySelectorAll('.calc-btn-base[data-value]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const value = btn.dataset.value;
+            const lastChar = currentExpression.slice(-1);
+            let isOperator = OPERATORS.includes(value);
+
+            // Handle Number/Decimal Input
+            if (!isOperator && value !== 'neg' && value !== '%') {
+                setActiveOperator(null);
+                currentExpression += value;
+
+            // Handle Operator Input
+            } else if (isOperator) {
+                // Replace last operator if a new one is pressed immediately
+                if (OPERATORS.includes(lastChar)) {
+                    currentExpression = currentExpression.slice(0, -1);
+                }
+                // Only add operator if the expression is not empty
+                if (currentExpression.length > 0) {
+                    currentExpression += value;
+                    setActiveOperator(btn);
+                }
+
+            // Handle Special Functions
+            } else if (value === 'neg') {
+                // Logic to toggle negation on the LAST number entered
+                // This requires advanced parsing, but for simplicity, we'll implement it on the current display value
+                if (display.value && display.value !== '0') {
+                    // Find the last number in the expression
+                    const parts = currentExpression.split(/([\+\-\*\/])/);
+                    const lastValue = parts.pop();
+                    const operator = parts.pop(); // The operator *before* the last value
+
+                    if (lastValue) {
+                        const negatedValue = (parseFloat(lastValue) * -1).toString();
+                        currentExpression = currentExpression.substring(0, currentExpression.length - lastValue.length) + negatedValue;
+                    } else if (operator && !lastValue) {
+                        // If an operator is trailing, add the negative sign to start the next number
+                        currentExpression += '-'; 
+                    }
+                }
+            } else if (value === '%') {
+                // Apply percentage to the currently displayed number (last number in the expression)
+                const parts = currentExpression.split(/([\+\-\*\/])/);
+                const lastValue = parts.pop();
+                
+                if (lastValue) {
+                    const percentValue = (parseFloat(lastValue) / 100).toString();
+                    currentExpression = currentExpression.substring(0, currentExpression.length - lastValue.length) + percentValue;
+                }
+            }
+
+            updateDisplays();
+        });
+    });
+
+    document.getElementById('calc-equal').addEventListener('click', () => {
+        setActiveOperator(null);
+        if (!currentExpression) return;
+        
+        try {
+            const finalResult = safeEvaluate(currentExpression);
+
+            if (finalResult === 'Error' || !finalResult) {
+                 throw new Error("Invalid operation");
+            }
+            
+            addHistory(`${currentExpression.replace(/\*/g, '×').replace(/\//g, '÷')} = ${finalResult}`);
+            
+            // Set the result as the new starting expression for continuous calculation
+            currentExpression = finalResult.toString();
+            lastResult = finalResult;
+            preview.textContent = ''; // Clear preview after a finished calculation
+            display.value = lastResult;
+
+        } catch { 
+            display.value = 'Error'; 
+            setTimeout(() => {currentExpression = ''; lastResult = '0'; updateDisplays();}, 1000); // Clear error after 1 second
+        }
+    });
+
+    document.getElementById('calc-clear').addEventListener('click', () => { 
+        currentExpression=''; 
+        lastResult = '0';
+        updateDisplays(); 
+        setActiveOperator(null);
+    });
+
+    document.getElementById('calc-back').addEventListener('click', () => { 
+        setActiveOperator(null);
+        currentExpression=currentExpression.slice(0,-1); 
+        updateDisplays(); 
+    });
+
+    document.getElementById('clear-history').addEventListener('click', () => { 
+        history=[]; 
+        localStorage.removeItem('calcHistory'); 
+        renderHistory(); 
+    });
+
+    // Initial setup
+    renderHistory();
+    updateDisplays(); 
+
+    // Keyboard support (simplified to support new logic)
+    window.addEventListener('keydown', e => {
+      const keyMap = {
+        '/': '/', '*': '*', '-': '-', '+': '+',
+        'Enter': '=', '=': '=', 'Backspace': 'DEL',
+        '.': '.', 'Escape': 'AC'
+      };
+
+      const value = keyMap[e.key] || e.key;
+
+      if ((e.key >= '0' && e.key <= '9') || keyMap[e.key]) {
+        e.preventDefault();
+        
+        // Prioritize specific buttons (AC, DEL, =)
+        if (value === 'AC') { document.getElementById('calc-clear').click(); return; }
+        if (value === 'DEL') { document.getElementById('calc-back').click(); return; }
+        if (value === '=') { document.getElementById('calc-equal').click(); return; }
+        
+        // Otherwise, simulate a data-value click
+        document.querySelector(`.calc-btn-base[data-value="${value}"]`)?.click();
+      }
+    });
+  </script>
+</body>
+</html>

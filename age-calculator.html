@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Primary Meta Tags -->
+  <title>Age Calculator – Aivorize</title>
+  <meta name="description" content="Instantly calculate your exact age in years, months, and days with Aivorize’s free Age Calculator — fast, simple, and beautifully designed by Kaif ur Rehman." />
+  <meta name="keywords" content="age calculator, online age calculator, date of birth calculator, birthday calculator, Aivorize age tool, Kaif ur Rehman, free online calculator" />
+  <meta name="author" content="Kaif ur Rehman" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="theme-color" content="#007aff" />
+  <link rel="canonical" href="https://aivorize.netlify.app/age-calculator" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="faviconnob.png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="faviconnob.png" />
+  <meta name="msapplication-TileImage" content="faviconnob.png" />
+  <meta name="msapplication-TileColor" content="#007aff" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://aivorize.netlify.app/age-calculator" />
+  <meta property="og:title" content="Age Calculator – Aivorize" />
+  <meta property="og:description" content="Find your exact age in seconds with Aivorize’s modern Age Calculator. Fast, elegant, and free — built by Kaif ur Rehman." />
+  <meta property="og:image" content="https://aivorize.netlify.app/images/age-og.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://aivorize.netlify.app/age-calculator" />
+  <meta name="twitter:title" content="Age Calculator – Aivorize" />
+  <meta name="twitter:description" content="Instantly calculate your age with Aivorize — accurate, stylish, and easy to use." />
+  <meta name="twitter:image" content="https://aivorize.netlify.app/images/age-og.png" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8PS60F1CVW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-8PS60F1CVW');
+  </script>
+  <!-- End Google Analytics -->
+   
+  <!-- Google AdSense -->
+<script async
+  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3918862480266328"
+  crossorigin="anonymous">
+</script>
+<!-- End Google AdSense -->
+
+  <!-- Schema.org Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://aivorize.netlify.app/#organization",
+        "name": "Aivorize",
+        "url": "https://aivorize.netlify.app/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://aivorize.netlify.app/faviconnob.png"
+        },
+        "founder": {
+          "@type": "Person",
+          "name": "Kaif ur Rehman"
+        },
+        "sameAs": [
+          "https://www.youtube.com/@aivorize",
+          "https://www.instagram.com/aivorize/",
+          "https://www.tiktok.com/@aivorizeofficial",
+          "https://www.youtube.com/@kaif-ur-rehman",
+          "https://www.instagram.com/kaif.ur.rehman/",
+          "https://www.tiktok.com/@kaif.urrehman"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://aivorize.netlify.app/#website",
+        "url": "https://aivorize.netlify.app/",
+        "name": "Aivorize",
+        "description": "Aivorize – 15+ premium free online tools, calculators, and generators for simplicity and performance.",
+        "publisher": { "@id": "https://aivorize.netlify.app/#organization" },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://aivorize.netlify.app/search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://aivorize.netlify.app/age-calculator#webpage",
+        "url": "https://aivorize.netlify.app/age-calculator",
+        "name": "Age Calculator – Aivorize",
+        "isPartOf": { "@id": "https://aivorize.netlify.app/#website" },
+        "about": { "@id": "https://aivorize.netlify.app/#organization" },
+        "description": "Calculate your age instantly with Aivorize’s free Age Calculator — accurate, simple, and modern."
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Age Calculator",
+        "operatingSystem": "All",
+        "applicationCategory": "UtilityApplication",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "creator": {
+          "@type": "Person",
+          "name": "Kaif ur Rehman"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "5",
+          "reviewCount": "158"
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Tailwind & Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #fcfdfe;
+      color: #1f2937;
+      scroll-behavior: smooth;
+      min-height: 100vh;
+      background-image: radial-gradient(at 10% 10%, rgba(59,130,246,0.08), transparent),
+                        radial-gradient(at 90% 90%, rgba(16,185,129,0.03), transparent);
+    }
+    .glass-header {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background-color: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 1px 12px rgba(0,0,0,0.03);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .section-title {
+      font-family: 'Outfit', sans-serif;
+    }
+    .gradient-text {
+      background: linear-gradient(to right, #3b82f6, #10b981);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+</head>
+<body class="selection:bg-blue-200 transition-colors duration-500">
+
+  <!-- Header -->
+  <header class="glass-header fixed top-0 left-0 right-0 h-16 flex items-center px-4 md:px-6 z-50">
+    <div class="flex items-center space-x-2">
+      <img src="faviconnob.png" alt="Aivorize Logo" class="w-8 h-8 rounded-lg shadow-md" />
+      <a href="index.html" class="text-xl font-extrabold text-gray-900 hover:text-blue-600 transition-colors">Aivorize</a>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="max-w-5xl mx-auto pt-28 pb-20 px-4 md:px-6">
+
+    <!-- Age Calculator Section -->
+    <section class="mb-12">
+      <h1 class="text-4xl md:text-5xl font-extrabold section-title gradient-text mb-4 text-center">Age Calculator</h1>
+      <p class="text-gray-600 text-center mb-6 max-w-2xl mx-auto">
+        Calculate your age in years, months, days, hours, minutes, and even seconds. See countdown to your next birthday and share your result!
+      </p>
+
+      <!-- Input -->
+      <div class="flex flex-col md:flex-row gap-4 justify-center mb-6">
+        <div>
+          <label class="block text-gray-700 font-medium mb-2">Date of Birth</label>
+          <input type="date" id="dob" class="border border-gray-300 rounded-lg px-4 py-2 w-64" />
+        </div>
+        <button id="calculateAgeBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full font-medium transition mt-4 md:mt-8">
+          Calculate Age
+        </button>
+      </div>
+
+      <!-- Result -->
+      <div id="ageResult" class="p-6 rounded-xl bg-gray-50 text-gray-800 font-medium min-h-[10rem] text-center text-lg">
+        Your age and details will appear here.
+      </div>
+
+      <!-- Share Buttons -->
+      <div id="shareButtons" class="flex flex-wrap justify-center gap-4 mt-4 hidden">
+        <button onclick="shareWhatsApp()" class="flex items-center gap-2 bg-green-500 hover:opacity-90 text-white px-4 py-2 rounded-xl transition">
+          <i class="fab fa-whatsapp"></i> WhatsApp
+        </button>
+        <button onclick="shareFacebook()" class="flex items-center gap-2 bg-blue-700 hover:opacity-90 text-white px-4 py-2 rounded-xl transition">
+          <i class="fab fa-facebook-f"></i> Facebook
+        </button>
+        <button onclick="shareTwitter()" class="flex items-center gap-2 bg-blue-400 hover:opacity-90 text-white px-4 py-2 rounded-xl transition">
+          <i class="fab fa-twitter"></i> Twitter
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-gray-200 mt-16">
+    <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 text-sm text-gray-600">
+      <div>
+        <div class="flex items-center space-x-2 mb-4">
+          <img src="faviconnob.png" alt="Aivorize Logo" class="w-8 h-8 rounded-lg shadow-md">
+          <h2 class="text-lg font-bold text-gray-900">Aivorize</h2>
+        </div>
+        <p class="text-gray-500 leading-relaxed">
+          Aivorize is your premium hub for free online tools, calculators, and productivity utilities — crafted for speed, simplicity, and elegance.
+        </p>
+        <p class="mt-4 text-gray-500">
+          Designed & built by 
+          <a href="https://kaifurrehman.netlify.app/" target="_blank" class="text-blue-600 font-medium hover:underline">
+            Kaif ur Rehman
+          </a>.
+        </p>
+      </div>
+      <div>
+        <h3 class="text-base font-semibold text-gray-800 mb-3">Quick Links</h3>
+        <ul class="space-y-2">
+          <li><a href="about.html" class="hover:text-blue-600 transition-colors">About</a></li>
+          <li><a href="privacy.html" class="hover:text-blue-600 transition-colors">Privacy Policy</a></li>
+          <li><a href="terms.html" class="hover:text-blue-600 transition-colors">Terms & Conditions</a></li>
+          <li><a href="learn.html" class="hover:text-blue-600 transition-colors">Learn</a></li>
+          <li><a href="contact.html" class="hover:text-blue-600 transition-colors">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-base font-semibold text-gray-800 mb-3">Connect With Us</h3>
+        <div class="flex space-x-4 text-lg">
+          <a href="https://www.youtube.com/@aivorize" target="_blank" class="hover:text-red-600"><i class="fab fa-youtube"></i></a>
+          <a href="https://www.instagram.com/aivorize" target="_blank" class="hover:text-pink-600"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.tiktok.com/@aivorizeofficial" target="_blank" class="hover:text-black"><i class="fab fa-tiktok"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="border-t border-gray-100 py-4">
+      <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-500">
+        <p>&copy; <span id="currentYear"></span> Aivorize. All rights reserved.</p>
+        <p class="mt-2 sm:mt-0">Crafted with ❤️ by <a href="https://kaifurrehman.netlify.app/" target="_blank" class="text-blue-600 hover:underline font-medium">Kaif ur Rehman</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+    const dobInput = document.getElementById('dob');
+    const calculateBtn = document.getElementById('calculateAgeBtn');
+    const resultDiv = document.getElementById('ageResult');
+    const shareButtons = document.getElementById('shareButtons');
+    const pageURL = 'https://aivorize.netlify.app/age-calculator';
+
+    function calculateAge(dob) {
+      const birthDate = new Date(dob);
+      const now = new Date();
+
+      if (birthDate > now) return 'Invalid date of birth.';
+
+      const diff = now - birthDate;
+      const years = now.getFullYear() - birthDate.getFullYear() - (now < new Date(now.getFullYear(), birthDate.getMonth(), birthDate.getDate()) ? 1 : 0);
+      const months = (now.getMonth() - birthDate.getMonth() + (now.getDate() < birthDate.getDate() ? -1 : 0) + 12) % 12;
+      const days = Math.floor((now - new Date(now.getFullYear(), now.getMonth(), birthDate.getDate() + (now.getDate() >= birthDate.getDate() ? 0 : -1))) / (1000*60*60*24));
+      
+      const totalDays = Math.floor(diff / (1000*60*60*24));
+      const totalHours = Math.floor(diff / (1000*60*60));
+      const totalMinutes = Math.floor(diff / (1000*60));
+      const totalSeconds = Math.floor(diff / 1000);
+
+      let nextBirthday = new Date(now.getFullYear(), birthDate.getMonth(), birthDate.getDate());
+      if (nextBirthday < now) nextBirthday.setFullYear(now.getFullYear() + 1);
+      const timeToNext = nextBirthday - now;
+      const daysToNext = Math.floor(timeToNext / (1000*60*60*24));
+      const hoursToNext = Math.floor((timeToNext % (1000*60*60*24)) / (1000*60*60));
+      const minutesToNext = Math.floor((timeToNext % (1000*60*60)) / (1000*60));
+
+      return `
+        Age: ${years} years, ${months} months, ${days} days
+        Total days lived: ${totalDays}
+        Total hours: ${totalHours}
+        Total minutes: ${totalMinutes}
+        Total seconds: ${totalSeconds}
+        Next birthday in: ${daysToNext} days, ${hoursToNext} hours, ${minutesToNext} minutes
+      `;
+    }
+
+    function shareWhatsApp() {
+      const text = `Check my age result! \n${resultDiv.innerText}\nOpen here: ${pageURL}`;
+      window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+    }
+    function shareFacebook() {
+      const fbURL = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageURL)}&quote=${encodeURIComponent(resultDiv.innerText)}`;
+      window.open(fbURL, '_blank');
+    }
+    function shareTwitter() {
+      const text = `My age result:\n${resultDiv.innerText}\nCheck it here: ${pageURL}`;
+      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+    }
+
+    calculateBtn.addEventListener('click', () => {
+      if (!dobInput.value) {
+        resultDiv.innerHTML = 'Please select your date of birth.';
+        shareButtons.classList.add('hidden');
+        return;
+      }
+      resultDiv.innerText = calculateAge(dobInput.value);
+      shareButtons.classList.remove('hidden');
+    });
+  </script>
+
+</body>
+</html>

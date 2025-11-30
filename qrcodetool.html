@@ -1,0 +1,669 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>QR Code Tool - Aivorize | Generator & Scanner</title>
+  <link rel="icon" type="image/png" href="faviconnob.png" />
+
+  <!-- Tailwind & Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8PS60F1CVW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-8PS60F1CVW');
+  </script>
+  <!-- End Google Analytics -->
+  <!-- Google AdSense -->
+<script async
+  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3918862480266328"
+  crossorigin="anonymous">
+</script>
+<!-- End Google AdSense -->
+
+  <style>
+    :root {
+      --aivo-blue: #3b82f6;
+      --aivo-teal: #10b981;
+      --glass-bg: rgba(255,255,255,0.92);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #fcfdfe;
+      color: #1f2937;
+      scroll-behavior: smooth;
+      min-height: 100vh;
+      background-image:
+        radial-gradient(at 10% 10%, rgba(59,130,246,0.08), transparent),
+        radial-gradient(at 90% 90%, rgba(16,185,129,0.03), transparent);
+    }
+
+    .glass-header {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background-color: #F9F9F9;
+      box-shadow: 0 1px 12px rgba(0,0,0,0.03);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .section-title {
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .gradient-text {
+      background: linear-gradient(to right, var(--aivo-blue), var(--aivo-teal));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    input, select, textarea {
+      border: 1px solid #d1d5db;
+      border-radius: 0.5rem;
+      padding: 0.5rem 1rem;
+      width: 100%;
+      background: white;
+    }
+
+    .btn {
+      transition: all .14s ease;
+      border-radius: 999px;
+      padding: .6rem 1.1rem;
+      font-weight: 600;
+      display: inline-flex;
+      gap: .6rem;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn:active { transform: translateY(1px); }
+
+    /* light glass modal */
+    .modal-backdrop {
+      background: rgba(13,17,28,0.36);
+      backdrop-filter: blur(6px);
+    }
+
+    .modal-glass {
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.6);
+      box-shadow: 0 8px 30px rgba(16,24,40,0.08);
+    }
+
+    /* small toast */
+    .toast {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 24px;
+      background: rgba(17,24,39,0.95);
+      color: #fff;
+      padding: .6rem .9rem;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: .95rem;
+      box-shadow: 0 8px 24px rgba(17,24,39,0.25);
+      z-index: 60;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .18s ease;
+    }
+
+    .toast.show { opacity: 1; pointer-events: auto; }
+
+    /* responsive stacking for action buttons */
+    @media (max-width: 640px) {
+      .actions-stack { flex-direction: column; }
+      .actions-stack .btn { width: 100%; }
+    }
+  </style>
+</head>
+
+<body class="selection:bg-blue-200 transition-colors duration-500">
+
+  <!-- Header -->
+  <header class="glass-header fixed top-0 left-0 right-0 h-16 flex items-center px-4 md:px-6 z-50" role="banner">
+    <div class="flex items-center space-x-2">
+      <img src="faviconnob.png" alt="Aivorize Logo" class="w-8 h-8 rounded-lg shadow-md" />
+      <a href="index.html" class="text-xl font-extrabold text-gray-900 hover:text-blue-600 transition-colors">Aivorize</a>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="max-w-5xl mx-auto pt-28 pb-20 px-4 md:px-6">
+
+    <!-- Hero Section -->
+    <section class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-extrabold section-title gradient-text mb-4">
+        QR Code Tool
+      </h1>
+      <p class="text-gray-600 max-w-2xl mx-auto text-lg">
+        Generate static or dynamic QR codes (with optional logo). Download, copy, or share results — or scan QR codes using your camera or an uploaded image.
+      </p>
+    </section>
+
+    <!-- Tabs -->
+    <div class="flex justify-center gap-4 mb-8">
+      <button id="genTab" class="px-4 py-2 bg-blue-600 text-white rounded-full font-medium btn">Generate QR</button>
+      <button id="scanTab" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-full font-medium btn">Scan QR</button>
+    </div>
+
+    <!-- Generator Section -->
+    <section id="generatorSection" class="mb-12">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4">Generate QR Code</h2>
+
+      <div class="grid gap-4 md:grid-cols-2 mb-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Enter URL or Text</label>
+          <input type="text" id="qrText" placeholder="https://example.com" aria-label="QR text or URL" />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Choose Error Correction</label>
+          <select id="qrError" aria-label="Error correction level">
+            <option value="L">Low (7%)</option>
+            <option value="M" selected>Medium (15%)</option>
+            <option value="Q">Quartile (25%)</option>
+            <option value="H">High (30%)</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Upload Logo (optional)</label>
+          <input type="file" id="qrLogo" accept="image/*" aria-label="Upload logo for QR code" />
+          <p class="text-xs text-gray-500 mt-1">Small square PNG/JPG recommended. Logo will be centered.</p>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Size (px)</label>
+          <input type="number" id="qrSize" value="300" min="128" max="2000" aria-label="QR size in pixels" />
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button id="generateBtn" class="btn bg-blue-600 text-white" aria-label="Generate QR">
+          <i class="fa fa-qrcode"></i> Generate QR
+        </button>
+
+        <label for="batchInput" class="text-sm text-gray-500 hidden md:inline"> (single mode)</label>
+      </div>
+
+      <!-- Result -->
+      <div id="qrResult" class="mt-6 flex flex-col items-center gap-4">
+        <div class="bg-white p-6 rounded-2xl shadow-lg flex flex-col items-center">
+          <canvas id="qrCanvas" width="300" height="300" class="rounded"></canvas>
+
+          <div class="mt-4 w-full flex flex-col sm:flex-row items-center justify-center gap-3 actions-stack">
+            <!-- Download (green) -->
+            <button id="downloadQR" class="btn bg-green-500 text-white hidden" title="Download QR">
+              <i class="fa fa-download"></i> Download
+            </button>
+
+            <!-- Copy (gray neutral) -->
+            <button id="copyText" class="btn bg-gray-100 text-gray-800 hidden" title="Copy QR text">
+              <i class="fa fa-copy"></i> Copy Text
+            </button>
+
+            <!-- Share (blue) opens modal -->
+            <button id="shareQR" class="btn bg-blue-500 text-white hidden" title="Share QR">
+              <i class="fa fa-share-alt"></i> Share
+            </button>
+          </div>
+        </div>
+
+        <p id="qrPlainText" class="text-sm text-gray-600 break-all hidden"></p>
+      </div>
+    </section>
+
+    <!-- Scanner Section -->
+    <section id="scannerSection" class="mb-12 hidden">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4">Scan QR Code</h2>
+
+      <div class="grid gap-4 md:grid-cols-2">
+        <div>
+          <video id="qrVideo" class="w-full rounded-xl border border-gray-300 mb-4" style="max-height:360px;"></video>
+
+          <div class="flex gap-3">
+            <button id="startScan" class="btn bg-blue-600 text-white"><i class="fa fa-camera"></i> Start Scanning</button>
+            <button id="stopScan" class="btn bg-red-600 text-white"><i class="fa fa-stop"></i> Stop</button>
+            <button id="pasteImage" class="btn bg-gray-100 text-gray-800"><i class="fa fa-image"></i> Paste Image / Upload</button>
+            <input id="uploadScan" type="file" accept="image/*" class="hidden" />
+          </div>
+        </div>
+
+        <div class="flex flex-col">
+          <label class="text-sm font-medium text-gray-700 mb-2">Scanned Result</label>
+          <textarea id="scanResult" class="w-full rounded-lg p-3 h-40" rows="6" readonly></textarea>
+
+          <div class="mt-3 flex gap-3">
+            <button id="copyScan" class="btn bg-gray-100 text-gray-800"><i class="fa fa-copy"></i> Copy</button>
+            <button id="openScan" class="btn bg-blue-600 text-white"><i class="fa fa-arrow-up-right-from-square"></i> Open</button>
+            <button id="saveScan" class="btn bg-green-500 text-white"><i class="fa fa-save"></i> Save</button>
+          </div>
+
+          <p class="text-xs text-gray-500 mt-3">You can paste an image (Ctrl+V) or upload a file to scan a QR code from an image.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Share Modal (light glass) -->
+  <div id="shareModal" class="fixed inset-0 z-50 hidden">
+    <div id="shareBackdrop" class="absolute inset-0 modal-backdrop"></div>
+
+    <div class="relative min-h-screen flex items-center justify-center p-4">
+      <div class="modal-glass max-w-sm w-full p-5" role="dialog" aria-modal="true" aria-labelledby="shareTitle">
+        <div class="flex justify-between items-start">
+          <div>
+            <h3 id="shareTitle" class="text-lg font-bold text-gray-900">Share this QR Code</h3>
+            <p class="text-sm text-gray-600">Choose how you'd like to share the generated QR code or its link.</p>
+          </div>
+          <button id="closeShare" class="text-gray-500 hover:text-gray-700" aria-label="Close share modal">
+            <i class="fa fa-xmark text-xl"></i>
+          </button>
+        </div>
+
+        <div class="mt-4 grid gap-3">
+          <button id="shareWhatsapp" class="btn bg-green-500 text-white w-full"><i class="fa fa-whatsapp"></i> Share via WhatsApp</button>
+          <button id="shareCopyLink" class="btn bg-gray-100 text-gray-800 w-full"><i class="fa fa-link"></i> Copy Link</button>
+          <button id="shareTwitter" class="btn bg-sky-500 text-white w-full"><i class="fa fa-x-twitter"></i> Share on X (Twitter)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ <!-- Footer -->
+<footer class="bg-[#F9F9F9] border-t border-gray-200 mt-16">
+  <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 text-sm text-gray-600">
+    <div>
+      <div class="flex items-center space-x-2 mb-4">
+        <img src="faviconnob.png" alt="Aivorize Logo" class="w-8 h-8 rounded-lg shadow-md">
+        <h2 class="text-lg font-bold text-gray-900">Aivorize</h2>
+      </div>
+      <p class="text-gray-500 leading-relaxed">
+        All-in-one premium hub for QR codes and other free online tools.
+      </p>
+    </div>
+
+    <div>
+      <h3 class="text-base font-semibold text-gray-800 mb-3">Quick Links</h3>
+      <ul class="space-y-2">
+        <li><a href="about.html" class="hover:text-blue-600 transition-colors">About</a></li>
+        <li><a href="privacy.html" class="hover:text-blue-600 transition-colors">Privacy Policy</a></li>
+        <li><a href="terms.html" class="hover:text-blue-600 transition-colors">Terms & Conditions</a></li>
+        <li><a href="learn.html" class="hover:text-blue-600 transition-colors">Learn</a></li>
+        <li><a href="contact.html" class="hover:text-blue-600 transition-colors">Contact</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="text-base font-semibold text-gray-800 mb-3">Connect With Us</h3>
+      <div class="flex space-x-4 text-lg">
+        <a href="https://www.youtube.com/@aivorize" target="_blank" class="hover:text-red-600"><i class="fab fa-youtube"></i></a>
+        <a href="https://www.instagram.com/aivorize" target="_blank" class="hover:text-pink-600"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@aivorizeofficial" target="_blank" class="hover:text-black"><i class="fab fa-tiktok"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="border-t border-gray-100 py-4 bg-[#F9F9F9]">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-500">
+      <p>&copy; <span id="currentYear"></span> Aivorize. All rights reserved.</p>
+      <p class="mt-2 sm:mt-0">Crafted with ❤️ by 
+        <a href="https://kaifurrehman.netlify.app/" target="_blank" class="text-blue-600 hover:underline font-medium">Kaif ur Rehman</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
+  </script>
+</footer>
+
+  <!-- Toast -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+  <script src="https://unpkg.com/html5-qrcode@2.0.9/minified/html5-qrcode.min.js"></script>
+  <script>
+    // Basic wiring & helpers
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+    const genTab = document.getElementById('genTab');
+    const scanTab = document.getElementById('scanTab');
+    const generatorSection = document.getElementById('generatorSection');
+    const scannerSection = document.getElementById('scannerSection');
+
+    genTab.addEventListener('click', () => {
+      generatorSection.classList.remove('hidden');
+      scannerSection.classList.add('hidden');
+      genTab.classList.add('bg-blue-600','text-white');
+      genTab.classList.remove('bg-gray-200','text-gray-800');
+      scanTab.classList.remove('bg-blue-600','text-white');
+      scanTab.classList.add('bg-gray-200','text-gray-800');
+    });
+    scanTab.addEventListener('click', () => {
+      scannerSection.classList.remove('hidden');
+      generatorSection.classList.add('hidden');
+      scanTab.classList.add('bg-blue-600','text-white');
+      scanTab.classList.remove('bg-gray-200','text-gray-800');
+      genTab.classList.remove('bg-blue-600','text-white');
+      genTab.classList.add('bg-gray-200','text-gray-800');
+    });
+
+    // Elements
+    const qrCanvas = document.getElementById('qrCanvas');
+    const generateBtn = document.getElementById('generateBtn');
+    const downloadQR = document.getElementById('downloadQR');
+    const shareQR = document.getElementById('shareQR');
+    const copyTextBtn = document.getElementById('copyText');
+    const qrPlainText = document.getElementById('qrPlainText');
+
+    const toastEl = document.getElementById('toast');
+    function showToast(msg, timeout=1400){
+      toastEl.textContent = msg;
+      toastEl.classList.add('show');
+      setTimeout(()=> toastEl.classList.remove('show'), timeout);
+    }
+
+    // Generate QR with optional logo overlay
+    async function generateQR() {
+      const text = document.getElementById('qrText').value.trim();
+      const errorLevel = document.getElementById('qrError').value;
+      const size = Math.max(128, Math.min(2000, parseInt(document.getElementById('qrSize').value || 300)));
+      const logoFile = document.getElementById('qrLogo').files[0];
+
+      if (!text) { alert("Please enter URL or text."); return; }
+
+      // Prepare canvas
+      qrCanvas.width = size;
+      qrCanvas.height = size;
+      const ctx = qrCanvas.getContext('2d');
+      ctx.clearRect(0,0,qrCanvas.width, qrCanvas.height);
+
+      try {
+        // Use QRCode library to draw to an offscreen canvas (it accepts a canvas element)
+        await QRCode.toCanvas(qrCanvas, text, {
+          errorCorrectionLevel: errorLevel,
+          width: size,
+          margin: 1,
+          color: { dark: '#111827', light: '#ffffff' }
+        });
+
+        // If logo uploaded, overlay it centered
+        if (logoFile) {
+          const img = await readFileAsImage(logoFile);
+          // determine logo size relative to QR (max ~20% of width)
+          const maxLogoW = size * 0.22;
+          const aspect = img.width / img.height;
+          let lw = maxLogoW, lh = lw / aspect;
+          if (lh > maxLogoW) { lh = maxLogoW; lw = lh * aspect; }
+
+          // draw a white rounded rectangle behind logo for contrast
+          const pad = 6;
+          const rx = (size - lw)/2 - pad;
+          const ry = (size - lh)/2 - pad;
+          const rw = lw + pad*2;
+          const rh = lh + pad*2;
+          roundRect(ctx, rx, ry, rw, rh, 8, '#fff', '#fff');
+
+          // then draw logo
+          ctx.drawImage(img, (size - lw)/2, (size - lh)/2, lw, lh);
+        }
+
+        // show actions
+        downloadQR.classList.remove('hidden');
+        copyTextBtn.classList.remove('hidden');
+        shareQR.classList.remove('hidden');
+        qrPlainText.classList.remove('hidden');
+        qrPlainText.textContent = text;
+
+        showToast("QR code generated");
+      } catch (err) {
+        console.error(err);
+        alert("Failed to generate QR code.");
+      }
+    }
+
+    function readFileAsImage(file){
+      return new Promise((resolve, reject) => {
+        const fr = new FileReader();
+        fr.onload = () => {
+          const img = new Image();
+          img.onload = () => resolve(img);
+          img.onerror = reject;
+          img.src = fr.result;
+        };
+        fr.onerror = reject;
+        fr.readAsDataURL(file);
+      });
+    }
+
+    // rounded rect helper
+    function roundRect(ctx, x, y, w, h, r, fillStyle, strokeStyle){
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.arcTo(x + w, y, x + w, y + h, r);
+      ctx.arcTo(x + w, y + h, x, y + h, r);
+      ctx.arcTo(x, y + h, x, y, r);
+      ctx.arcTo(x, y, x + w, y, r);
+      ctx.closePath();
+      if (fillStyle) {
+        ctx.fillStyle = fillStyle;
+        ctx.fill();
+      }
+      if (strokeStyle) {
+        ctx.strokeStyle = strokeStyle;
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    // Actions
+    generateBtn.addEventListener('click', generateQR);
+
+    downloadQR.addEventListener('click', () => {
+      const link = document.createElement('a');
+      link.download = 'qr-code.png';
+      link.href = qrCanvas.toDataURL('image/png');
+      link.click();
+    });
+
+    copyTextBtn.addEventListener('click', async () => {
+      const text = document.getElementById('qrText').value.trim();
+      if (!text) { showToast("Nothing to copy"); return; }
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast("Copied to clipboard");
+      } catch (e) {
+        console.error(e);
+        showToast("Copy failed");
+      }
+    });
+
+    // Share modal
+    const shareModal = document.getElementById('shareModal');
+    const shareBackdrop = document.getElementById('shareBackdrop');
+    const closeShare = document.getElementById('closeShare');
+    const shareWhatsapp = document.getElementById('shareWhatsapp');
+    const shareCopyLink = document.getElementById('shareCopyLink');
+    const shareTwitter = document.getElementById('shareTwitter');
+
+    shareQR.addEventListener('click', () => {
+      shareModal.classList.remove('hidden');
+      setTimeout(()=> shareModal.classList.add('open'), 10);
+    });
+
+    function closeShareModal(){
+      shareModal.classList.add('hidden');
+    }
+
+    closeShare.addEventListener('click', closeShareModal);
+    shareBackdrop.addEventListener('click', closeShareModal);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeShareModal(); });
+
+    // Share actions
+    const TOOL_URL = 'https://aivorize.netlify.app/qr-tool'; // adjust if needed
+    shareWhatsapp.addEventListener('click', () => {
+      const text = document.getElementById('qrText').value.trim();
+      const payload = encodeURIComponent((text ? text + '\n' : '') + 'Open here: ' + TOOL_URL);
+      const url = `https://wa.me/?text=${payload}`;
+      window.open(url, '_blank');
+    });
+
+    shareCopyLink.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(TOOL_URL);
+        showToast("Link copied");
+      } catch (e) {
+        showToast("Copy failed");
+      }
+    });
+
+    shareTwitter.addEventListener('click', () => {
+      const text = encodeURIComponent('Check this QR code or generator: ' + TOOL_URL);
+      window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
+    });
+
+    // SCANNER: html5-qrcode usage (camera scanning + image upload/paste)
+    let html5Scanner = null;
+    const qrVideoElem = document.getElementById('qrVideo');
+    const scanResultEl = document.getElementById('scanResult');
+    const startScanBtn = document.getElementById('startScan');
+    const stopScanBtn = document.getElementById('stopScan');
+    const uploadScan = document.getElementById('uploadScan');
+    const pasteImageBtn = document.getElementById('pasteImage');
+    const copyScanBtn = document.getElementById('copyScan');
+    const openScanBtn = document.getElementById('openScan');
+    const saveScanBtn = document.getElementById('saveScan');
+
+    async function startScanner(){
+      if (!html5Scanner) {
+        html5Scanner = new Html5Qrcode(/* element id */ "qrVideo", { verbose: false });
+      }
+      try {
+        await html5Scanner.start(
+          { facingMode: "environment" },
+          { fps: 10, qrbox: Math.min(320, window.innerWidth - 80) },
+          (decodedText) => {
+            scanResultEl.value = decodedText;
+            showToast("QR scanned");
+          },
+          (error) => {
+            // scanning error callback (ignore minor errors)
+          }
+        );
+      } catch (err) {
+        console.error(err);
+        alert("Camera access denied or not available.");
+      }
+    }
+
+    async function stopScanner(){
+      if (html5Scanner) {
+        try {
+          await html5Scanner.stop();
+          // clear video element
+          html5Scanner.clear();
+        } catch (e) { console.warn(e); }
+      }
+    }
+
+    startScanBtn.addEventListener('click', startScanner);
+    stopScanBtn.addEventListener('click', stopScanner);
+
+    // Upload / Paste image scanning
+    pasteImageBtn.addEventListener('click', () => uploadScan.click());
+    uploadScan.addEventListener('change', async (e) => {
+      const f = e.target.files?.[0];
+      if (!f) return;
+      try {
+        const result = await Html5Qrcode.scanFile(f, true);
+        scanResultEl.value = result.decodedText || result;
+        showToast("Image scanned");
+      } catch (err) {
+        console.error(err);
+        alert("No QR code found in the image.");
+      }
+    });
+
+    // Clipboard paste support for images
+    window.addEventListener('paste', async (e) => {
+      if (!e.clipboardData) return;
+      const items = e.clipboardData.items;
+      for (let i=0;i<items.length;i++){
+        const it = items[i];
+        if (it.type.indexOf('image') !== -1) {
+          const file = it.getAsFile();
+          try {
+            const result = await Html5Qrcode.scanFile(file, true);
+            scanResultEl.value = result.decodedText || result;
+            showToast("Pasted image scanned");
+            return;
+          } catch (err) {
+            console.warn(err);
+            showToast("No QR found in pasted image");
+          }
+        }
+      }
+    });
+
+    // scan result actions
+    copyScanBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(scanResultEl.value || '');
+        showToast("Copied");
+      } catch { showToast("Copy failed"); }
+    });
+
+    openScanBtn.addEventListener('click', () => {
+      const txt = scanResultEl.value.trim();
+      if (!txt) { showToast("No result"); return; }
+      // if it's a URL open new tab, otherwise open search
+      try {
+        const isUrl = /^(https?:\/\/)/i.test(txt);
+        const url = isUrl ? txt : 'https://www.google.com/search?q=' + encodeURIComponent(txt);
+        window.open(url, '_blank');
+      } catch { showToast("Failed to open"); }
+    });
+
+    saveScanBtn.addEventListener('click', () => {
+      const txt = scanResultEl.value.trim();
+      if (!txt) { showToast("No result to save"); return; }
+      // simple download as txt file
+      const blob = new Blob([txt], { type: 'text/plain' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'scan-result.txt';
+      link.click();
+      URL.revokeObjectURL(link.href);
+      showToast("Saved");
+    });
+
+    // Utility: enable/disable actions if QR text changed
+    document.getElementById('qrText').addEventListener('input', () => {
+      const text = document.getElementById('qrText').value.trim();
+      if (!text) {
+        // hide copy/share/download if no text (but keep if earlier generated remains)
+      }
+    });
+
+    // Defensive: revoke camera on page unload
+    window.addEventListener('beforeunload', () => {
+      try { stopScanner(); } catch(e) {}
+    });
+  </script>
+</body>
+</html>

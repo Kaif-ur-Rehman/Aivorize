@@ -1,0 +1,664 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>File Size Converter - Convert Bytes, KB, MB, GB, TB | Aivorize</title>
+  <link rel="icon" type="image/png" href="faviconnob.png" />
+
+  <meta name="description" content="File Size Converter - convert between Bytes, KB, MB, GB, TB & PB. Add custom units, choose binary (1024) or decimal (1000) base, copy results and share via WhatsApp, X or link." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://aivorize.netlify.app/file-size-converter" />
+
+  <!-- Tailwind & Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8PS60F1CVW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-8PS60F1CVW');
+  </script>
+  <!-- End Google Analytics -->
+  <!-- Google AdSense -->
+<script async
+  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3918862480266328"
+  crossorigin="anonymous">
+</script>
+<!-- End Google AdSense -->
+
+  <style>
+    /* Aivorize theme: glass header, gradients, soft background */
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #fcfdfe;
+      color: #1f2937;
+      scroll-behavior: smooth;
+      min-height: 100vh;
+      background-image:
+        radial-gradient(at 10% 10%, rgba(59,130,246,0.06), transparent),
+        radial-gradient(at 90% 90%, rgba(16,185,129,0.02), transparent);
+    }
+
+    .glass-header {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background-color: rgba(255,255,255,0.95);
+      box-shadow: 0 1px 12px rgba(0,0,0,0.03);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .section-title { font-family: 'Outfit', sans-serif; }
+
+    .gradient-text {
+      background: linear-gradient(to right, #3b82f6, #10b981);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    input, select, button, textarea {
+      font-family: inherit;
+    }
+
+    /* Share modal (light glass) */
+    .glass-modal {
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      background-color: rgba(255,255,255,0.85);
+      border-radius: 12px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+      border: 1px solid rgba(255,255,255,0.6);
+    }
+  </style>
+</head>
+<body class="selection:bg-blue-200 transition-colors duration-300">
+
+  <!-- Header -->
+  <header class="glass-header fixed top-0 left-0 right-0 h-16 flex items-center px-4 md:px-6 z-50">
+    <div class="flex items-center space-x-3">
+      <img src="faviconnob.png" alt="Aivorize Logo" class="w-8 h-8 rounded-lg shadow-md" />
+      <a href="index.html" class="text-xl font-extrabold text-gray-900 hover:text-blue-600 transition-colors">Aivorize</a>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="max-w-5xl mx-auto pt-28 pb-20 px-4 md:px-6">
+
+    <!-- Hero -->
+    <section class="text-center mb-8">
+      <h1 class="text-4xl md:text-5xl font-extrabold section-title gradient-text mb-3">File Size Converter - Convert Bytes, KB, MB, GB, TB</h1>
+      <p class="text-gray-600 max-w-2xl mx-auto">Convert file sizes instantly. Add custom units, choose binary (1024) or decimal (1000) base, copy or share results.</p>
+    </section>
+
+    <!-- Converter Card -->
+    <div class="bg-white p-6 rounded-2xl shadow-lg">
+      <div class="grid gap-6 md:grid-cols-2">
+        <!-- Left: Controls -->
+        <div class="space-y-4">
+          <label class="text-sm font-medium text-gray-700">Value</label>
+          <input id="inputValue" type="number" step="any" class="w-full border border-gray-200 rounded-xl px-4 py-3" placeholder="Enter amount (e.g. 1.5)" aria-label="Value to convert">
+
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="text-sm font-medium text-gray-700">From</label>
+              <select id="fromUnit" class="w-full border border-gray-200 rounded-xl px-4 py-3"></select>
+            </div>
+            <div>
+              <label class="text-sm font-medium text-gray-700">To</label>
+              <select id="toUnit" class="w-full border border-gray-200 rounded-xl px-4 py-3"></select>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+              <label class="text-sm font-medium text-gray-700">Base</label>
+              <div class="inline-flex rounded-xl bg-gray-50 p-1 border border-gray-100">
+                <button id="baseDecimal" class="px-3 py-2 rounded-lg text-sm font-medium text-gray-700">Decimal (1000)</button>
+                <button id="baseBinary" class="px-3 py-2 rounded-lg text-sm font-medium text-gray-700 bg-white">Binary (1024)</button>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <button id="copyResult" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-full font-medium hover:bg-gray-300 transition">Copy Result</button>
+              <button id="openShare" class="bg-blue-600 text-white px-4 py-2 rounded-full font-medium hover:opacity-95">Share</button>
+            </div>
+          </div>
+
+          <!-- Custom units -->
+          <div class="pt-2 border-t border-gray-100">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-base font-semibold">Custom Units</h3>
+              <div class="flex items-center gap-2">
+                <button id="resetCustom" class="text-sm text-red-600 hover:underline">Reset Custom Units</button>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-2 mb-2">
+              <input id="customName" class="col-span-2 border border-gray-200 rounded-xl px-3 py-2" placeholder="Name (e.g. MB/s)" />
+              <input id="customMult" class="border border-gray-200 rounded-xl px-3 py-2" placeholder="Bytes multiplier" />
+            </div>
+            <div class="flex gap-2">
+              <button id="addCustom" class="bg-green-500 text-white px-4 py-2 rounded-full font-medium">Add unit</button>
+              <button id="pasteCustom" class="bg-gray-100 text-gray-800 px-4 py-2 rounded-full font-medium">Paste multiplier</button>
+            </div>
+
+            <p id="customHint" class="text-xs text-gray-500 mt-2">
+              Multiplier = how many bytes 1 unit represents. Example: MB = 1000000 (decimal) or 1048576 (binary).
+            </p>
+
+            <div id="customList" class="mt-3 space-y-2"></div>
+          </div>
+        </div>
+
+        <!-- Right: Result and info -->
+        <div class="space-y-4">
+          <div class="bg-gradient-to-br from-white to-gray-50 rounded-xl p-6 border border-gray-100">
+            <div class="flex items-center justify-between mb-2">
+              <div>
+                <h2 class="text-xl font-bold text-gray-900">Result</h2>
+                <p id="resultSubtitle" class="text-sm text-gray-500 mt-1">Realtime — updates as you type</p>
+              </div>
+              <div class="text-right">
+                <div id="resultValue" class="text-3xl font-extrabold text-gray-900">—</div>
+                <div id="resultUnit" class="text-sm text-gray-500 mt-1">Unit</div>
+              </div>
+            </div>
+
+            <div class="mt-3 flex gap-3">
+              <button id="copyBtn" class="px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300">Copy</button>
+              <button id="shareBtn" class="px-4 py-2 rounded-full bg-blue-600 text-white">Share</button>
+            </div>
+          </div>
+
+          <div class="bg-white border border-gray-100 rounded-xl p-4">
+            <h3 class="text-sm font-semibold text-gray-800 mb-2">Details</h3>
+            <div id="detailList" class="text-sm text-gray-600 space-y-1">
+              <!-- Filled by JS: days, hours not relevant here — show breakdown in bytes -->
+            </div>
+          </div>
+
+          <div class="text-xs text-gray-500">
+            <strong>Note:</strong> You can choose Decimal (1000) or Binary (1024) base. Custom units are saved locally.
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Share Modal (light glass) -->
+  <div id="shareModalBackdrop" class="fixed inset-0 z-40 hidden items-center justify-center px-4">
+    <div class="absolute inset-0 bg-black/30" data-close="true"></div>
+    <div class="glass-modal relative z-50 w-full max-w-sm p-6">
+      <div class="flex items-start justify-between">
+        <h3 class="text-lg font-bold">Share Result</h3>
+        <button id="closeShare" class="text-gray-500 hover:text-gray-700"><i class="fa fa-xmark"></i></button>
+      </div>
+
+      <p class="text-sm text-gray-600 mt-2">Share the conversion or copy a link that opens the converter pre-filled.</p>
+
+      <div class="mt-4 space-y-3">
+        <button id="waShare" class="w-full bg-green-500 text-white px-4 py-2 rounded-full flex items-center justify-center gap-2">
+          <i class="fab fa-whatsapp"></i> Share via WhatsApp
+        </button>
+
+        <button id="copyLinkShare" class="w-full bg-gray-100 text-gray-800 px-4 py-2 rounded-full flex items-center justify-center gap-2">
+          <i class="fa fa-link"></i> Copy Link
+        </button>
+
+        <button id="xShare" class="w-full bg-sky-500 text-white px-4 py-2 rounded-full flex items-center justify-center gap-2">
+          <i class="fab fa-x-twitter"></i> Share on X
+        </button>
+      </div>
+
+      <p id="shareToast" class="text-sm text-green-600 mt-3 hidden">Copied to clipboard</p>
+    </div>
+  </div>
+
+  <!-- Footer (Aivorize footer provided) -->
+  <footer class="bg-white border-t border-gray-200 mt-16">
+    <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 text-sm text-gray-600">
+      <!-- Left -->
+      <div>
+        <div class="flex items-center space-x-2 mb-4">
+          <img src="faviconnob.png" alt="Aivorize Logo" class="w-8 h-8 rounded-lg shadow-md">
+          <h2 class="text-lg font-bold text-gray-900">Aivorize</h2>
+        </div>
+        <p class="text-gray-500 leading-relaxed">
+          Aivorize is your premium hub for free online tools, calculators, and productivity utilities — crafted for speed, simplicity, and elegance.
+        </p>
+        <p class="mt-4 text-gray-500">
+          Designed & built by 
+          <a href="https://kaifurrehman.netlify.app/" target="_blank" class="text-blue-600 font-medium hover:underline">
+            Kaif ur Rehman
+          </a>.
+        </p>
+      </div>
+
+      <!-- Middle -->
+      <div>
+        <h3 class="text-base font-semibold text-gray-800 mb-3">Quick Links</h3>
+        <ul class="space-y-2">
+          <li><a href="about.html" class="hover:text-blue-600 transition-colors">About</a></li>
+          <li><a href="privacy.html" class="hover:text-blue-600 transition-colors">Privacy Policy</a></li>
+          <li><a href="terms.html" class="hover:text-blue-600 transition-colors">Terms & Conditions</a></li>
+          <li><a href="learn.html" class="hover:text-blue-600 transition-colors">Learn</a></li>
+          <li><a href="contact.html" class="hover:text-blue-600 transition-colors">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Right -->
+      <div>
+        <h3 class="text-base font-semibold text-gray-800 mb-3">Connect With Us</h3>
+        <div class="space-y-4">
+          <div>
+            <h4 class="text-gray-800 font-medium mb-1">Aivorize</h4>
+            <div class="flex space-x-4 text-lg">
+              <a href="https://www.youtube.com/@aivorize" target="_blank" class="hover:text-red-600"><i class="fab fa-youtube"></i></a>
+              <a href="https://www.instagram.com/aivorize" target="_blank" class="hover:text-pink-600"><i class="fab fa-instagram"></i></a>
+              <a href="https://www.tiktok.com/@aivorizeofficial" target="_blank" class="hover:text-black"><i class="fab fa-tiktok"></i></a>
+            </div>
+          </div>
+
+          <div>
+            <h4 class="text-gray-800 font-medium mb-1">Kaif ur Rehman</h4>
+            <div class="flex space-x-4 text-lg">
+              <a href="https://www.youtube.com/@kaif-ur-rehman" target="_blank" class="hover:text-red-600"><i class="fab fa-youtube"></i></a>
+              <a href="https://www.instagram.com/kaif.ur.rehman" target="_blank" class="hover:text-pink-600"><i class="fab fa-instagram"></i></a>
+              <a href="https://www.tiktok.com/@kaif.urrehman" target="_blank" class="hover:text-black"><i class="fab fa-tiktok"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-gray-100 py-4">
+      <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-500">
+        <p>&copy; <span id="currentYear"></span> Aivorize. All rights reserved.</p>
+        <p class="mt-2 sm:mt-0">Crafted with ❤️ by <a href="https://kaifurrehman.netlify.app/" target="_blank" class="text-blue-600 hover:underline font-medium">Kaif ur Rehman</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+  // Auto year
+  document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+  // Basic units (base multiplier is number of bytes per unit)
+  const standardUnits = [
+    { key: 'B', label: 'Byte (B)', mult: 1 },
+    { key: 'KB', label: 'KB', mult: 1e3 },
+    { key: 'MB', label: 'MB', mult: 1e6 },
+    { key: 'GB', label: 'GB', mult: 1e9 },
+    { key: 'TB', label: 'TB', mult: 1e12 },
+    { key: 'PB', label: 'PB', mult: 1e15 }
+  ];
+
+  // DOM elements
+  const fromUnit = document.getElementById('fromUnit');
+  const toUnit = document.getElementById('toUnit');
+  const inputValue = document.getElementById('inputValue');
+  const resultValue = document.getElementById('resultValue');
+  const resultUnit = document.getElementById('resultUnit');
+  const detailList = document.getElementById('detailList');
+
+  const copyResult = document.getElementById('copyResult');
+  const copyBtn = document.getElementById('copyBtn');
+  const shareBtn = document.getElementById('shareBtn');
+  const openShare = document.getElementById('openShare');
+
+  const shareModalBackdrop = document.getElementById('shareModalBackdrop');
+  const waShare = document.getElementById('waShare');
+  const copyLinkShare = document.getElementById('copyLinkShare');
+  const xShare = document.getElementById('xShare');
+  const shareToast = document.getElementById('shareToast');
+  const closeShare = document.getElementById('closeShare');
+
+  const addCustomBtn = document.getElementById('addCustom');
+  const resetCustomBtn = document.getElementById('resetCustom');
+  const customList = document.getElementById('customList');
+  const customName = document.getElementById('customName');
+  const customMult = document.getElementById('customMult');
+  const pasteCustom = document.getElementById('pasteCustom');
+
+  const baseDecimal = document.getElementById('baseDecimal');
+  const baseBinary = document.getElementById('baseBinary');
+
+  let base = 1024; // default binary
+  let customUnits = []; // loaded from localStorage
+
+  // Utility: Smart formatting (auto precision)
+  function smartFormat(n) {
+    if (!isFinite(n)) return '—';
+    const abs = Math.abs(n);
+    if (abs === 0) return '0';
+    if (abs >= 1000) return Math.round(n).toLocaleString();
+    if (abs >= 100) return n.toFixed(1).replace(/\.0+$/, '');
+    if (abs >= 1) return n.toFixed(2).replace(/\.0+$/, '');
+    if (abs >= 0.001) return n.toPrecision(3).replace(/(?:\.0+|(\.\d+?)0+)$/, '$1');
+    // very small
+    return n.toExponential(2);
+  }
+
+  // Load custom units from localStorage
+  function loadCustomUnits() {
+    try {
+      const raw = localStorage.getItem('aiv_file_size_custom_units');
+      customUnits = raw ? JSON.parse(raw) : [];
+    } catch (e) {
+      customUnits = [];
+    }
+  }
+
+  function saveCustomUnits() {
+    localStorage.setItem('aiv_file_size_custom_units', JSON.stringify(customUnits));
+  }
+
+  // Build unit list (standard + custom)
+  function buildUnitList() {
+    const all = [...standardUnits];
+    for (const cu of customUnits) {
+      all.push({ key: cu.key, label: cu.label, mult: Number(cu.mult) });
+    }
+    // Fill selects
+    fromUnit.innerHTML = '';
+    toUnit.innerHTML = '';
+    all.forEach(u => {
+      const o1 = document.createElement('option');
+      o1.value = u.key;
+      o1.dataset.mult = u.mult;
+      o1.textContent = `${u.label} (${u.key})`;
+      const o2 = o1.cloneNode(true);
+      fromUnit.appendChild(o1);
+      toUnit.appendChild(o2);
+    });
+  }
+
+  // Render custom units UI list
+  function renderCustomList() {
+    customList.innerHTML = '';
+    if (customUnits.length === 0) {
+      customList.innerHTML = '<div class="text-sm text-gray-500">No custom units added.</div>';
+      return;
+    }
+    customUnits.forEach((cu, idx) => {
+      const row = document.createElement('div');
+      row.className = 'flex items-center justify-between gap-2 p-2 border border-gray-100 rounded-lg';
+      row.innerHTML = `
+        <div class="text-sm"><strong>${escapeHtml(cu.key)}</strong> — ${escapeHtml(cu.label)} <span class="text-xs text-gray-500">(${Number(cu.mult).toLocaleString()} bytes)</span></div>
+        <div class="flex gap-2">
+          <button data-idx="${idx}" class="remove-custom text-xs text-red-500 hover:underline">Remove</button>
+        </div>
+      `;
+      customList.appendChild(row);
+    });
+
+    document.querySelectorAll('.remove-custom').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const idx = Number(btn.dataset.idx);
+        customUnits.splice(idx, 1);
+        saveCustomUnits();
+        buildUnitList();
+        renderCustomList();
+        doConvert();
+      });
+    });
+  }
+
+  // Escape HTML helper
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'" :'&#39;','"':'&quot;'}[c]));
+  }
+
+  // Convert function: reads inputs, computes
+  function doConvert(updateUrl = false) {
+    const value = parseFloat(inputValue.value);
+    const fromOpt = fromUnit.options[fromUnit.selectedIndex];
+    const toOpt = toUnit.options[toUnit.selectedIndex];
+    if (!fromOpt || !toOpt || isNaN(value)) {
+      resultValue.textContent = '—';
+      resultUnit.textContent = '';
+      detailList.innerHTML = '';
+      return;
+    }
+
+    // Get multipliers (they are stored as base multipliers in option dataset)
+    // If the unit key matches standardUnits, adjust multiplier to binary/decimal selection
+    const fromMultRaw = Number(fromOpt.dataset.mult);
+    const toMultRaw = Number(toOpt.dataset.mult);
+
+    // If the option matches a standard unit, adapt to current base
+    function adjustedMult(opt) {
+      const key = opt.value;
+      const std = standardUnits.find(s => s.key === key);
+      if (std) {
+        // base is either 1000 or 1024
+        const idx = standardUnits.indexOf(std); // 0..5
+        return Math.pow(base, idx); // B = base^0, KB = base^1, MB = base^2...
+      }
+      // custom unit: use provided multiplier
+      return Number(opt.dataset.mult) || 1;
+    }
+
+    const fromMult = adjustedMult(fromOpt);
+    const toMult = adjustedMult(toOpt);
+
+    // Convert: value_in_bytes = value * fromMult
+    const bytes = value * fromMult;
+    const out = bytes / toMult;
+
+    // Display
+    resultValue.textContent = smartFormat(out);
+    resultUnit.textContent = toOpt.textContent.replace(/\s*\(.*\)$/, '');
+    // details: show bytes and common units
+    const details = [];
+    details.push(`<div>Bytes: <strong>${smartFormat(bytes)}</strong></div>`);
+    // breakdown standard units
+    for (let i = 0; i < standardUnits.length; i++) {
+      const u = standardUnits[i];
+      const mult = Math.pow(base, i);
+      details.push(`<div>${u.key}: <strong>${smartFormat(bytes / mult)}</strong></div>`);
+    }
+    detailList.innerHTML = details.join('');
+    // optionally update URL (for sharing)
+    if (updateUrl) updateShareUrl(value, fromOpt.value, toOpt.value);
+  }
+
+  function updateShareUrl(value, from, to) {
+    const url = new URL(window.location.href.split('?')[0]);
+    url.searchParams.set('v', value);
+    url.searchParams.set('f', from);
+    url.searchParams.set('t', to);
+    url.searchParams.set('b', base);
+    history.replaceState({}, '', url.toString());
+  }
+
+  // Initialize: load custom units, build lists and set defaults
+  function init() {
+    loadCustomUnits();
+    buildUnitList();
+    renderCustomList();
+
+    // defaults
+    inputValue.value = '1';
+    fromUnit.value = 'MB';
+    toUnit.value = 'KB';
+    baseBinary.classList.add('bg-white');
+    baseDecimal.classList.remove('bg-white');
+
+    // Try parse URL params to pre-fill
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('v')) inputValue.value = params.get('v');
+    if (params.has('f')) fromUnit.value = params.get('f');
+    if (params.has('t')) toUnit.value = params.get('t');
+    if (params.has('b')) base = Number(params.get('b')) === 1000 ? 1000 : 1024;
+    if (base === 1000) {
+      baseDecimal.classList.add('bg-white');
+      baseBinary.classList.remove('bg-white');
+    } else {
+      baseBinary.classList.add('bg-white');
+      baseDecimal.classList.remove('bg-white');
+    }
+
+    doConvert();
+  }
+
+  // Event handlers
+  inputValue.addEventListener('input', () => doConvert(true));
+  fromUnit.addEventListener('change', () => doConvert(true));
+  toUnit.addEventListener('change', () => doConvert(true));
+
+  // copy result helpers
+  function copyToClipboard(text, flashEl) {
+    navigator.clipboard.writeText(text).then(() => {
+      if (flashEl) {
+        flashEl.classList.remove('hidden');
+        setTimeout(() => flashEl.classList.add('hidden'), 1500);
+      } else {
+        // small visual feedback
+        const old = document.createElement('div');
+        old.textContent = 'Copied';
+      }
+    }).catch(() => alert('Copy failed'));
+  }
+
+  copyResult.addEventListener('click', () => {
+    const txt = `${resultValue.textContent} ${resultUnit.textContent}`;
+    copyToClipboard(txt);
+  });
+  copyBtn.addEventListener('click', () => {
+    const txt = `${resultValue.textContent} ${resultUnit.textContent}`;
+    copyToClipboard(txt);
+  });
+
+  // Share modal logic
+  function openShareModal() {
+    shareModalBackdrop.classList.remove('hidden');
+    shareModalBackdrop.classList.add('flex');
+    shareToast.classList.add('hidden');
+  }
+  function closeShareModal() {
+    shareModalBackdrop.classList.add('hidden');
+    shareModalBackdrop.classList.remove('flex');
+  }
+  openShare.addEventListener('click', openShareModal);
+  shareBtn.addEventListener('click', openShareModal);
+  closeShare.addEventListener('click', closeShareModal);
+  shareModalBackdrop.querySelector('[data-close="true"]').addEventListener('click', closeShareModal);
+
+  // Build share link with params (so opening link pre-fills)
+  function buildShareLink() {
+    const v = inputValue.value || '';
+    const f = fromUnit.value || '';
+    const t = toUnit.value || '';
+    const url = new URL('https://aivorize.netlify.app/file-size-converter');
+    if (v) url.searchParams.set('v', v);
+    if (f) url.searchParams.set('f', f);
+    if (t) url.searchParams.set('t', t);
+    url.searchParams.set('b', base);
+    return url.toString();
+  }
+
+  waShare.addEventListener('click', () => {
+    const text = encodeURIComponent(`File size conversion: ${inputValue.value} ${fromUnit.value} → ${resultValue.textContent} ${toUnit.value}\nOpen here: ${buildShareLink()}`);
+    window.open(`https://wa.me/?text=${text}`, '_blank');
+  });
+
+  copyLinkShare.addEventListener('click', () => {
+    const link = buildShareLink();
+    copyToClipboard(link, shareToast);
+  });
+
+  xShare.addEventListener('click', () => {
+    const text = encodeURIComponent(`File size: ${inputValue.value} ${fromUnit.value} → ${resultValue.textContent} ${toUnit.value}`);
+    const url = encodeURIComponent(buildShareLink());
+    window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+  });
+
+  // Base toggle
+  baseDecimal.addEventListener('click', () => {
+    base = 1000;
+    baseDecimal.classList.add('bg-white');
+    baseBinary.classList.remove('bg-white');
+    doConvert(true);
+  });
+
+  baseBinary.addEventListener('click', () => {
+    base = 1024;
+    baseBinary.classList.add('bg-white');
+    baseDecimal.classList.remove('bg-white');
+    doConvert(true);
+  });
+
+  // Custom units: Add and paste
+  addCustomBtn.addEventListener('click', () => {
+    const name = (customName.value || '').trim();
+    const mult = (customMult.value || '').trim();
+    if (!name || !mult) {
+      alert('Please enter both unit name (key) and multiplier (bytes).');
+      return;
+    }
+    // sanitize key: short uppercase no spaces
+    const key = name.replace(/\s+/g, '-');
+    customUnits.push({ key, label: name, mult: Number(mult) });
+    saveCustomUnits();
+    buildUnitList();
+    renderCustomList();
+    customName.value = '';
+    customMult.value = '';
+    doConvert(true);
+  });
+
+  pasteCustom.addEventListener('click', async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      customMult.value = text.trim();
+    } catch (e) {
+      alert('Clipboard access denied.');
+    }
+  });
+
+  resetCustomBtn.addEventListener('click', () => {
+    if (!confirm('Remove all custom units?')) return;
+    customUnits = [];
+    saveCustomUnits();
+    buildUnitList();
+    renderCustomList();
+    doConvert(true);
+  });
+
+  // Remove trailing non-numeric in multiplier input (prevent mistakes)
+  customMult.addEventListener('input', () => {
+    // allow digits and dot and scientific notation
+    customMult.value = customMult.value.replace(/[^\d.eE+-]/g, '');
+  });
+
+  // Share via "Share" button inside right panel (same as openShare)
+  shareBtn.addEventListener('click', openShareModal);
+
+  // Copy result button duplicate handled
+
+  // Allow pressing Enter to convert/update url
+  inputValue.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      doConvert(true);
+    }
+  });
+
+  // On load
+  init();
+
+  // keep converting if user types rapidly (debounce)
+  let convertTimer;
+  inputValue.addEventListener('input', () => {
+    clearTimeout(convertTimer);
+    convertTimer = setTimeout(() => doConvert(true), 180);
+  });
+  document.getElementById('fromUnit').addEventListener('change', () => doConvert(true));
+  document.getElementById('toUnit').addEventListener('change', () => doConvert(true));
+  </script>
+</body>
+</html>

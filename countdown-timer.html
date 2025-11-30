@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Primary Meta Tags -->
+  <title>Countdown Timer – Aivorize</title>
+  <meta name="description" content="Set precise countdowns with Aivorize’s free Countdown Timer — beautifully designed, fast, and accurate for work, study, or events. Created by Kaif ur Rehman." />
+  <meta name="keywords" content="countdown timer, online countdown, timer app, countdown clock, Aivorize tools, Kaif ur Rehman, online timer" />
+  <meta name="author" content="Kaif ur Rehman" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="theme-color" content="#007aff" />
+  <link rel="canonical" href="https://aivorize.netlify.app/countdown-timer" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="faviconnob.png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="faviconnob.png" />
+  <meta name="msapplication-TileImage" content="faviconnob.png" />
+  <meta name="msapplication-TileColor" content="#007aff" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://aivorize.netlify.app/countdown-timer" />
+  <meta property="og:title" content="Countdown Timer – Aivorize" />
+  <meta property="og:description" content="Aivorize’s Countdown Timer — precise, minimal, and free. Perfect for productivity, workouts, and tasks." />
+  <meta property="og:image" content="https://aivorize.netlify.app/images/countdown-og.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://aivorize.netlify.app/countdown-timer" />
+  <meta name="twitter:title" content="Countdown Timer – Aivorize" />
+  <meta name="twitter:description" content="Use Aivorize’s beautiful, accurate Countdown Timer for events, study sessions, and goals." />
+  <meta name="twitter:image" content="https://aivorize.netlify.app/images/countdown-og.png" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8PS60F1CVW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-8PS60F1CVW');
+  </script>
+  <!-- End Google Analytics -->
+   
+  <!-- Google AdSense -->
+<script async
+  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3918862480266328"
+  crossorigin="anonymous">
+</script>
+<!-- End Google AdSense -->
+
+  <!-- Schema.org Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://aivorize.netlify.app/#organization",
+        "name": "Aivorize",
+        "url": "https://aivorize.netlify.app/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://aivorize.netlify.app/faviconnob.png"
+        },
+        "founder": {
+          "@type": "Person",
+          "name": "Kaif ur Rehman"
+        },
+        "sameAs": [
+          "https://www.youtube.com/@aivorize",
+          "https://www.instagram.com/aivorize/",
+          "https://www.tiktok.com/@aivorizeofficial",
+          "https://www.youtube.com/@kaif-ur-rehman",
+          "https://www.instagram.com/kaif.ur.rehman/",
+          "https://www.tiktok.com/@kaif.urrehman"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://aivorize.netlify.app/#website",
+        "url": "https://aivorize.netlify.app/",
+        "name": "Aivorize",
+        "description": "Aivorize – 15+ premium free online tools, calculators, and generators for simplicity and performance.",
+        "publisher": { "@id": "https://aivorize.netlify.app/#organization" },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://aivorize.netlify.app/search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://aivorize.netlify.app/countdown-timer#webpage",
+        "url": "https://aivorize.netlify.app/countdown-timer",
+        "name": "Countdown Timer – Aivorize",
+        "isPartOf": { "@id": "https://aivorize.netlify.app/#website" },
+        "about": { "@id": "https://aivorize.netlify.app/#organization" },
+        "description": "Set custom countdowns easily with Aivorize’s free Countdown Timer — elegant, reliable, and fast."
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Countdown Timer",
+        "operatingSystem": "All",
+        "applicationCategory": "UtilityApplication",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "creator": {
+          "@type": "Person",
+          "name": "Kaif ur Rehman"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "5",
+          "reviewCount": "142"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(at 10% 10%, rgba(59,130,246,0.08), transparent),
+                  radial-gradient(at 90% 90%, rgba(16,185,129,0.03), transparent);
+      color: #1f2937;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(0,0,0,0.08);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .gradient-text {
+      background: linear-gradient(to right, #3b82f6, #10b981);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    input {
+      width: 70px;
+      text-align: center;
+      font-size: 1.3rem;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      padding: 6px 0;
+      font-weight: 600;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 2px rgba(59,130,246,0.2);
+    }
+
+    #timerDisplay {
+      font-size: 3.2rem;
+      font-weight: 700;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: #111827;
+      letter-spacing: 2px;
+    }
+
+    .btn {
+      transition: all 0.3s ease;
+      font-weight: 600;
+      color: #fff;
+      border-radius: 12px;
+      padding: 10px 25px;
+    }
+
+    .btn-start {
+      background-color: #10b981;
+    }
+
+    .btn-stop {
+      background-color: #ef4444;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+
+<body>
+  <header class="fixed top-0 left-0 right-0 h-16 flex items-center justify-between px-6 bg-white/70 backdrop-blur-md shadow-sm">
+    <div class="flex items-center space-x-2">
+      <img src="faviconnob.png" alt="Aivorize" class="w-8 h-8 rounded-lg shadow-sm">
+      <a href="index.html" class="text-xl font-bold text-gray-800 hover:text-blue-600">Aivorize</a>
+    </div>
+  </header>
+
+  <main class="mt-24 flex flex-col items-center justify-center w-full">
+    <h1 class="text-4xl md:text-5xl font-extrabold gradient-text mb-8 text-center">Countdown Timer</h1>
+
+    <div class="glass">
+      <div class="flex justify-center space-x-3 mb-6">
+        <input type="number" id="hours" min="0" max="99" placeholder="00">
+        <span class="text-xl font-bold text-gray-500">:</span>
+        <input type="number" id="minutes" min="0" max="59" placeholder="00">
+        <span class="text-xl font-bold text-gray-500">:</span>
+        <input type="number" id="seconds" min="0" max="59" placeholder="00">
+      </div>
+
+      <div id="timerDisplay">00:00:00</div>
+
+      <div class="flex justify-center gap-3">
+        <button id="startStopBtn" class="btn btn-start">Start</button>
+        <button id="resetBtn" class="btn bg-gray-700">Reset</button>
+        <button id="shareBtn" class="btn bg-blue-600"><i class="fa-solid fa-share-nodes"></i></button>
+      </div>
+
+      <audio id="beepSound">
+        <source src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" type="audio/ogg">
+      </audio>
+    </div>
+  </main>
+ <footer class="bg-white border-t border-gray-200 mt-20">
+  
+  <div class="max-w-7xl mx-auto px-6 sm:px-8 py-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+
+      <div>
+        <div class="flex items-center space-x-3 mb-5">
+          <img src="faviconnob.png" alt="Aivorize Logo" class="w-8 h-8 rounded-lg shadow-sm">
+          <h2 class="text-base font-semibold text-gray-900">Aivorize</h2>
+        </div>
+        <p class="text-sm text-gray-600 leading-relaxed">
+          Aivorize is your premium hub for free online tools, calculators, and productivity utilities — crafted for speed, simplicity, and elegance.
+        </p>
+        <p class="mt-5 text-sm text-gray-600">
+          Designed & built by 
+          <a href="https://kaifurrehman.netlify.app/" target="_blank" class="text-blue-600 font-medium hover:underline">
+            Kaif ur Rehman
+          </a>.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-semibold text-gray-900 mb-4">Quick Links</h3>
+        <ul class="space-y-3">
+          <li><a href="about.html" class="text-sm text-gray-600 hover:text-blue-600 hover:underline transition-colors duration-150">About</a></li>
+          <li><a href="privacy.html" class="text-sm text-gray-600 hover:text-blue-600 hover:underline transition-colors duration-150">Privacy Policy</a></li>
+          <li><a href="terms.html" class="text-sm text-gray-600 hover:text-blue-600 hover:underline transition-colors duration-150">Terms & Conditions</a></li>
+          <li><a href="learn.html" class="text-sm text-gray-600 hover:text-blue-600 hover:underline transition-colors duration-150">Learn</a></li>
+          <li><a href="contact.html" class="text-sm text-gray-600 hover:text-blue-600 hover:underline transition-colors duration-150">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-semibold text-gray-900 mb-4">Follow Aivorize</h3>
+        <div class="flex space-x-4 text-xl text-gray-500">
+          <a href="https://www.youtube.com/@aivorize" target="_blank" class="hover:text-gray-900 transition-colors duration-150" aria-label="Aivorize on YouTube">
+            <i class="fab fa-youtube"></i>
+          </a>
+          <a href="https://www.instagram.com/aivorize" target="_blank" class="hover:text-gray-900 transition-colors duration-150" aria-label="Aivorize on Instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="https://www.tiktok.com/@aivorizeofficial" target="_blank" class="hover:text-gray-900 transition-colors duration-150" aria-label="Aivorize on TikTok">
+            <i class="fab fa-tiktok"></i>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-semibold text-gray-900 mb-4">Follow Kaif</h3>
+        <div class="flex space-x-4 text-xl text-gray-500">
+          <a href="https://www.youtube.com/@kaif-ur-rehman" target="_blank" class="hover:text-gray-900 transition-colors duration-150" aria-label="Kaif ur Rehman on YouTube">
+            <i class="fab fa-youtube"></i>
+          </a>
+          <a href="https://www.instagram.com/kaif.ur.rehman" target="_blank" class="hover:text-gray-900 transition-colors duration-150" aria-label="Kaif ur Rehman on Instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="https://www.tiktok.com/@kaif.urrehman" target="_blank" class="hover:text-gray-900 transition-colors duration-150" aria-label="Kaif ur Rehman on TikTok">
+            <i class="fab fa-tiktok"></i>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="border-t border-gray-200 mt-12 py-6">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-500">
+      <p>&copy; <span id="currentYear"></span> Aivorize. All rights reserved.</p>
+      <p class="mt-2 sm:mt-0">
+        Crafted with ❤️ by <a href="https://kaifurrehman.netlify.app/" target="_blank" class="text-blue-600 hover:underline font-medium">Kaif ur Rehman</a>
+      </p>
+    </div>
+  </div>
+  
+</footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    let timer;
+    let totalSeconds = 0;
+    let running = false;
+
+    const display = document.getElementById("timerDisplay");
+    const beep = document.getElementById("beepSound");
+    const startStopBtn = document.getElementById("startStopBtn");
+    const resetBtn = document.getElementById("resetBtn");
+    const shareBtn = document.getElementById("shareBtn");
+
+    function updateDisplay() {
+      const hrs = Math.floor(totalSeconds / 3600);
+      const mins = Math.floor((totalSeconds % 3600) / 60);
+      const secs = totalSeconds % 60;
+      display.textContent = 
+        `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    startStopBtn.addEventListener("click", () => {
+      if (!running) {
+        const h = parseInt(document.getElementById("hours").value) || 0;
+        const m = parseInt(document.getElementById("minutes").value) || 0;
+        const s = parseInt(document.getElementById("seconds").value) || 0;
+        totalSeconds = h * 3600 + m * 60 + s;
+
+        if (totalSeconds <= 0) return;
+
+        running = true;
+        startStopBtn.textContent = "Stop";
+        startStopBtn.classList.remove("btn-start");
+        startStopBtn.classList.add("btn-stop");
+
+        timer = setInterval(() => {
+          if (totalSeconds > 0) {
+            totalSeconds--;
+            updateDisplay();
+          } else {
+            clearInterval(timer);
+            running = false;
+            beep.play();
+            startStopBtn.textContent = "Start";
+            startStopBtn.classList.remove("btn-stop");
+            startStopBtn.classList.add("btn-start");
+          }
+        }, 1000);
+      } else {
+        clearInterval(timer);
+        running = false;
+        startStopBtn.textContent = "Start";
+        startStopBtn.classList.remove("btn-stop");
+        startStopBtn.classList.add("btn-start");
+      }
+    });
+
+    resetBtn.addEventListener("click", () => {
+      clearInterval(timer);
+      totalSeconds = 0;
+      updateDisplay();
+      running = false;
+      startStopBtn.textContent = "Start";
+      startStopBtn.classList.remove("btn-stop");
+      startStopBtn.classList.add("btn-start");
+    });
+
+    shareBtn.addEventListener("click", async () => {
+      const data = {
+        title: "Aivorize Countdown Timer",
+        text: "Try this smooth and elegant countdown timer by Aivorize!",
+        url: "https://aivorize.netlify.app/countdown-timer"
+      };
+      try {
+        await navigator.share(data);
+      } catch {
+        navigator.clipboard.writeText(data.url);
+        alert("Link copied: " + data.url);
+      }
+    });
+
+    updateDisplay();
+  </script>
+</body>
+</html>

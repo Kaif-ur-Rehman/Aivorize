@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learn — How to Use Aivorize Tools | Calculator, QR, Passwords & More</title>
+
+  <!-- Primary Meta Tags -->
+  <meta name="description" content="Learn how to use Aivorize's tools: Calculator, Age Calculator, QR Code Tool, Password Generator, Password Strength, Unit Converter, File Size Converter, Stopwatch, Countdown Timer, Dice Roller, Spin Wheel, Head & Tails, Emoji Picker. Step-by-step guides, tips and examples." />
+  <meta name="keywords" content="Aivorize learn, how to use tools, calculator tutorial, QR generator guide, password generator, unit converter instructions" />
+  <meta name="author" content="Kaif ur Rehman" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#007aff" />
+  <link rel="canonical" href="https://aivorize.netlify.app/learn.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://aivorize.netlify.app/learn.html" />
+  <meta property="og:title" content="Learn — How to Use Aivorize Tools" />
+  <meta property="og:description" content="Step-by-step guides and tips for using Aivorize's calculators, converters, generators and utility tools." />
+  <meta property="og:image" content="https://aivorize.netlify.app/images/og-image.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Learn — How to Use Aivorize Tools" />
+  <meta name="twitter:description" content="Step-by-step guides and tips for using Aivorize's calculators, converters, generators and utility tools." />
+  <meta name="twitter:image" content="https://aivorize.netlify.app/images/og-image.png" />
+
+  <!-- Fonts & Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8PS60F1CVW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-8PS60F1CVW');
+  </script>
+  <!-- End Google Analytics -->
+  <!-- Google AdSense -->
+<script async
+  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3918862480266328"
+  crossorigin="anonymous">
+</script>
+<!-- End Google AdSense -->
+
+  <style>
+    body { font-family: 'Inter', sans-serif; background: #fcfdfe; color: #111827; min-height:100vh; -webkit-font-smoothing:antialiased; }
+    .glass-header { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); background-color: rgba(255,255,255,0.95); border-bottom:1px solid rgba(0,0,0,0.04); box-shadow:0 1px 12px rgba(0,0,0,0.03); }
+    .section-title { font-family: 'Outfit', sans-serif; }
+    .tool-card-brief { background: #ffffff; border:1px solid rgba(0,0,0,0.04); border-radius: .75rem; padding:1rem; box-shadow: 0 6px 18px rgba(0,0,0,0.04); }
+    .steps li { margin-bottom:.6rem; }
+    .tip { background: linear-gradient(90deg,#eef2ff,#ecfeff); padding:.6rem 0.75rem; border-radius:.6rem; border:1px solid rgba(59,130,246,0.08); }
+    pre { background:#0f172a; color:#e6eef8; padding:.75rem; border-radius:.5rem; overflow:auto; font-size:.92rem; }
+    @media (max-width:768px){ .grid-cols-auto{ grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body class="selection:bg-blue-200">
+
+  <!-- Header -->
+  <header class="glass-header fixed top-0 left-0 right-0 h-16 flex items-center px-4 md:px-6 z-50" role="banner">
+    <div class="flex items-center gap-3">
+      <img src="faviconnob.png" alt="Aivorize Logo" class="w-8 h-8 rounded-lg shadow-sm" />
+      <a href="index.html" class="text-xl font-extrabold text-gray-900 hover:text-blue-600">Aivorize</a>
+    </div>
+    <div class="ml-auto flex items-center gap-3">
+      <a href="index.html" class="text-sm text-gray-600 hover:text-blue-600">Home</a>
+      <a href="about.html" class="text-sm text-gray-600 hover:text-blue-600">About</a>
+      <a href="privacy.html" class="text-sm text-gray-600 hover:text-blue-600">Privacy</a>
+      <a href="contact.html" class="text-sm text-gray-600 hover:text-blue-600">Contact</a>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="max-w-6xl mx-auto pt-28 pb-20 px-4 md:px-6">
+    <section class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-extrabold section-title gradient-text mb-4" style="background:linear-gradient(90deg,#3b82f6,#10b981); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">
+        Learn How to Use Aivorize Tools
+      </h1>
+      <p class="text-gray-600 max-w-2xl mx-auto">Step-by-step usage guides, examples, quick tips and accessibility notes for our most used tools. Click a tool heading to jump to its section.</p>
+      <div class="mt-6 flex justify-center gap-3 flex-wrap">
+        <!-- quick index -->
+        <a href="#calculator" class="px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-sm">Calculator</a>
+        <a href="#age-calculator" class="px-3 py-1 rounded-full bg-pink-50 text-pink-700 text-sm">Age Calculator</a>
+        <a href="#qr" class="px-3 py-1 rounded-full bg-green-50 text-green-700 text-sm">QR Code Tool</a>
+        <a href="#password-generator" class="px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 text-sm">Password Generator</a>
+        <a href="#password-strength" class="px-3 py-1 rounded-full bg-red-50 text-red-700 text-sm">Password Strength</a>
+        <a href="#unit-converter" class="px-3 py-1 rounded-full bg-purple-50 text-purple-700 text-sm">Unit Converter</a>
+        <a href="#file-size-converter" class="px-3 py-1 rounded-full bg-cyan-50 text-cyan-700 text-sm">File Size Converter</a>
+        <a href="#stopwatch" class="px-3 py-1 rounded-full bg-yellow-50 text-yellow-700 text-sm">Stopwatch</a>
+        <a href="#countdown" class="px-3 py-1 rounded-full bg-orange-50 text-orange-700 text-sm">Countdown</a>
+        <a href="#dice" class="px-3 py-1 rounded-full bg-gray-50 text-gray-700 text-sm">Dice Roller</a>
+        <a href="#spinwheel" class="px-3 py-1 rounded-full bg-teal-50 text-teal-700 text-sm">Spin Wheel</a>
+        <a href="#headtails" class="px-3 py-1 rounded-full bg-lime-50 text-lime-700 text-sm">Head & Tails</a>
+        <a href="#emoji" class="px-3 py-1 rounded-full bg-fuchsia-50 text-fuchsia-700 text-sm">Emoji Picker</a>
+      </div>
+    </section>
+
+    <!-- Tools grid of mini cards (brief) -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-12">
+      <!-- We'll show short cards linking to detailed sections -->
+      <div class="tool-card-brief">
+        <h3 class="font-semibold">Calculator</h3>
+        <p class="text-sm text-gray-600 mt-1">Simple, powerful math calculations with history.</p>
+        <a href="#calculator" class="inline-block mt-3 text-blue-600 hover:underline text-sm">How to use →</a>
+      </div>
+
+      <div class="tool-card-brief">
+        <h3 class="font-semibold">Age Calculator</h3>
+        <p class="text-sm text-gray-600 mt-1">Calculate age and days until next birthday.</p>
+        <a href="#age-calculator" class="inline-block mt-3 text-pink-600 hover:underline text-sm">How to use →</a>
+      </div>
+
+      <div class="tool-card-brief">
+        <h3 class="font-semibold">QR Code Tool</h3>
+        <p class="text-sm text-gray-600 mt-1">Generate & decode QR codes for text, URLs, and Wi-Fi.</p>
+        <a href="#qr" class="inline-block mt-3 text-green-600 hover:underline text-sm">How to use →</a>
+      </div>
+
+      <div class="tool-card-brief">
+        <h3 class="font-semibold">Password Generator</h3>
+        <p class="text-sm text-gray-600 mt-1">Create strong, customizable passwords quickly.</p>
+        <a href="#password-generator" class="inline-block mt-3 text-indigo-600 hover:underline text-sm">How to use →</a>
+      </div>
+
+      <div class="tool-card-brief">
+        <h3 class="font-semibold">Password Strength</h3>
+        <p class="text-sm text-gray-600 mt-1">Check safety & complexity of passwords.</p>
+        <a href="#password-strength" class="inline-block mt-3 text-red-600 hover:underline text-sm">How to use →</a>
+      </div>
+
+      <div class="tool-card-brief">
+        <h3 class="font-semibold">Unit Converter</h3>
+        <p class="text-sm text-gray-600 mt-1">Convert units (length, mass, volume, etc.).</p>
+        <a href="#unit-converter" class="inline-block mt-3 text-purple-600 hover:underline text-sm">How to use →</a>
+      </div>
+
+      <div class="tool-card-brief">
+        <h3 class="font-semibold">File Size Converter</h3>
+        <p class="text-sm text-gray-600 mt-1">KB ↔ MB ↔ GB conversions & exact byte values.</p>
+        <a href="#file-size-converter" class="inline-block mt-3 text-cyan-600 hover:underline text-sm">How to use →</a>
+      </div>
+
+      <div class="tool-card-brief">
+        <h3 class="font-semibold">Stopwatch</h3>
+        <p class="text-sm text-gray-600 mt-1">Measure durations & record lap times.</p>
+        <a href="#stopwatch" class="inline-block mt-3 text-yellow-700 hover:underline text-sm">How to use →</a>
+      </div>
+
+      <div class="tool-card-brief">
+        <h3 class="font-semibold">Countdown Timer</h3>
+        <p class="text-sm text-gray-600 mt-1">Set timers with audio alerts for tasks & breaks.</p>
+        <a href="#countdown" class="inline-block mt-3 text-orange-600 hover:underline text-sm">How to use →</a>
+      </div>
+
+      <div class="tool-card-brief">
+        <h3 class="font-semibold">Dice Roller</h3>
+        <p class="text-sm text-gray-600 mt-1">Roll one or more dice for games or decisions.</p>
+        <a href="#dice" class="inline-block mt-3 text-gray-700 hover:underline text-sm">How to use →</a>
+      </div>
+
+      <div class="tool-card-brief">
+        <h3 class="font-semibold">Spin Wheel</h3>
+        <p class="text-sm text-gray-600 mt-1">Random picker with customizable segments.</p>
+        <a href="#spinwheel" class="inline-block mt-3 text-teal-600 hover:underline text-sm">How to use →</a>
+      </div>
+
+      <div class="tool-card-brief">
+        <h3 class="font-semibold">Head & Tails</h3>
+        <p class="text-sm text-gray-600 mt-1">Flip a coin for quick binary decisions.</p>
+        <a href="#headtails" class="inline-block mt-3 text-lime-700 hover:underline text-sm">How to use →</a>
+      </div>
+
+      <div class="tool-card-brief">
+        <h3 class="font-semibold">Emoji Picker</h3>
+        <p class="text-sm text-gray-600 mt-1">Search, browse and copy emojis for any platform.</p>
+        <a href="#emoji" class="inline-block mt-3 text-fuchsia-700 hover:underline text-sm">How to use →</a>
+      </div>
+    </section>
+
+    <!-- Detailed instructions for each tool -->
+    <section id="details" class="space-y-12">
+
+      <!-- Calculator -->
+      <article id="calculator">
+        <h2 class="text-2xl font-semibold mb-3">Calculator — Quick Guide</h2>
+        <p class="text-gray-600 mb-4">A simple, fast calculator for everyday math. Includes a visible input, keypad, and calculation history.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="font-medium mb-2">How to use</h3>
+            <ol class="steps list-decimal pl-6 text-gray-700">
+              <li>Type numbers using your keyboard or tap the on-screen keypad.</li>
+              <li>Use operators (+, −, ×, ÷) to build the expression.</li>
+              <li>Press <strong>=</strong> (or Enter) to calculate the result.</li>
+              <li>Use <strong>C</strong> or <strong>AC</strong> to clear current input.</li>
+              <li>Open the history panel to re-use previous expressions (tap an entry to restore it).</li>
+            </ol>
+            <div class="mt-4 tip text-sm">Tip: Use parentheses ( ) for grouping. The calculator follows standard operator precedence.</div>
+          </div>
+
+          <div>
+            <h3 class="font-medium mb-2">Examples</h3>
+            <ul class="text-gray-700">
+              <li class="mb-1"><strong>Calculate VAT:</strong> 120 × 1.15 → enter <code>120*1.15</code> and =</li>
+              <li class="mb-1"><strong>Average of 3 numbers:</strong> (12 + 17 + 21) ÷ 3 → <code>(12+17+21)/3</code></li>
+            </ul>
+            <div class="mt-4">
+              <small class="text-gray-500">Accessibility: keypad buttons are keyboard-focusable and have ARIA labels.</small>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Age Calculator -->
+      <article id="age-calculator">
+        <h2 class="text-2xl font-semibold mb-3">Age Calculator — Quick Guide</h2>
+        <p class="text-gray-600 mb-4">Calculate someone's age from their birthdate and see days until their next birthday.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="font-medium mb-2">How to use</h3>
+            <ol class="steps list-decimal pl-6 text-gray-700">
+              <li>Select or type the birthdate (YYYY-MM-DD or use the date picker).</li>
+              <li>Press <strong>Calculate</strong>.</li>
+              <li>The tool shows years, months, and days old, and days until next birthday.</li>
+            </ol>
+            <div class="mt-4 tip text-sm">Tip: If you want age at a specific date (not today) — use the optional "Calculate for date" field if available.</div>
+          </div>
+
+          <div>
+            <h3 class="font-medium mb-2">Examples & notes</h3>
+            <ul class="text-gray-700">
+              <li><strong>Example:</strong> Born 2000-09-13 → shows current age and days until next birthday.</li>
+              <li>Use for planning events (birthdays, eligibility checks, etc.).</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- QR Code Tool -->
+      <article id="qr">
+        <h2 class="text-2xl font-semibold mb-3">QR Code Tool — Quick Guide</h2>
+        <p class="text-gray-600 mb-4">Generate QR codes for text, URLs, phone numbers, or Wi-Fi credentials. You can also decode QR images.</p>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="font-medium mb-2">Generate a QR</h3>
+            <ol class="steps list-decimal pl-6 text-gray-700">
+              <li>Choose the QR type (Text, URL, Wi-Fi, Phone, etc.).</li>
+              <li>Enter the content (URL or text). For Wi-Fi, enter SSID, password and encryption type.</li>
+              <li>Choose size and optional error correction (higher = more tolerant to damage).</li>
+              <li>Click <strong>Generate</strong>. Download PNG/SVG or scan from screen.</li>
+            </ol>
+            <div class="mt-4 tip text-sm">Tip: Use high error correction when printing codes on physical materials.</div>
+          </div>
+
+          <div>
+            <h3 class="font-medium mb-2">Decode a QR</h3>
+            <ol class="steps list-decimal pl-6 text-gray-700">
+              <li>Open the decoder tab.</li>
+              <li>Upload an image of the QR or use device camera (if supported).</li>
+              <li>The tool extracts and shows the encoded text or link. Click the link to open it.</li>
+            </ol>
+            <div class="mt-4">
+              <small class="text-gray-500">Privacy: decoding happens locally in most browsers — no content is stored by Aivorize.</small>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Password Generator -->
+      <article id="password-generator">
+        <h2 class="text-2xl font-semibold mb-3">Password Generator — Quick Guide</h2>
+        <p class="text-gray-600 mb-4">Create strong, customizable passwords — choose length and character sets (lowercase, uppercase, numbers, symbols).</p>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="font-medium mb-2">How to generate</h3>
+            <ol class="steps list-decimal pl-6 text-gray-700">
+              <li>Select desired length (recommended 12+ for most accounts).</li>
+              <li>Toggle character groups: uppercase, lowercase, numbers, symbols.</li>
+              <li>Optionally remove ambiguous characters (like O/0 or l/1).</li>
+              <li>Click <strong>Generate</strong>. Use the copy button to quickly copy to clipboard.</li>
+            </ol>
+            <div class="mt-4 tip text-sm">Tip: Use the generator for unique passwords per site and store them in a password manager.</div>
+          </div>
+
+          <div>
+            <h3 class="font-medium mb-2">Best practices</h3>
+            <ul class="text-gray-700">
+              <li>Use 16+ characters for critical accounts.</li>
+              <li>Include symbol & number sets for stronger entropy.</li>
+              <li>Do not reuse passwords across important accounts.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- Password Strength -->
+      <article id="password-strength">
+        <h2 class="text-2xl font-semibold mb-3">Password Strength — Quick Guide</h2>
+        <p class="text-gray-600 mb-4">Analyze passwords for length, common patterns, dictionary words, and estimated crack time.</p>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="font-medium mb-2">How to check strength</h3>
+            <ol class="steps list-decimal pl-6 text-gray-700">
+              <li>Type or paste the password into the input field (only do this for your own passwords).</li>
+              <li>Tool provides a score, shows weak patterns (like repeating characters), and estimates time to crack.</li>
+              <li>Follow suggestions to improve: increase length, add varied character types, avoid dictionary words.</li>
+            </ol>
+            <div class="mt-4 tip text-sm">Tip: Use the strength suggestions to tweak the password and re-check until you reach a strong score.</div>
+          </div>
+
+          <div>
+            <h3 class="font-medium mb-2">Privacy note</h3>
+            <p class="text-gray-700">We recommend checking strength only for passwords you own; avoid pasting other people's passwords publicly. The check runs client-side when possible.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Unit Converter -->
+      <article id="unit-converter">
+        <h2 class="text-2xl font-semibold mb-3">Unit Converter — Quick Guide</h2>
+        <p class="text-gray-600 mb-4">Convert between units for length, weight, volume, temperature, speed and more.</p>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="font-medium mb-2">How to convert</h3>
+            <ol class="steps list-decimal pl-6 text-gray-700">
+              <li>Select the conversion category (Length, Mass, Volume, Temperature, etc.).</li>
+              <li>Choose the source unit and the target unit.</li>
+              <li>Enter a numeric value and press Convert (or press Enter).</li>
+              <li>Results show with a precise decimal and often a rounded friendly format.</li>
+            </ol>
+            <div class="mt-4 tip text-sm">Tip: For temperature conversions, the tool accounts for offsets (C ↔ F).</div>
+          </div>
+
+          <div>
+            <h3 class="font-medium mb-2">Examples</h3>
+            <ul class="text-gray-700">
+              <li>Convert 5 kilometers to miles: select Length → km → miles → enter 5 → Convert.</li>
+              <li>Convert 2048 MB to GB: File size conversions use 1024 or 1000 base depending on chosen mode (if available).</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- File Size Converter -->
+      <article id="file-size-converter">
+        <h2 class="text-2xl font-semibold mb-3">File Size Converter — Quick Guide</h2>
+        <p class="text-gray-600 mb-4">Translate between bytes, KB, MB, GB, TB — handy for storage planning and uploads.</p>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="font-medium mb-2">How to use</h3>
+            <ol class="steps list-decimal pl-6 text-gray-700">
+              <li>Enter a size (e.g. 1536).</li>
+              <li>Pick the unit (Bytes, KB, MB, etc.).</li>
+              <li>Select conversion base: 1024 (binary) or 1000 (decimal) if option available.</li>
+              <li>Press Convert to see equivalent values across units.</li>
+            </ol>
+            <div class="mt-4 tip text-sm">Tip: Choose 1024 for OS-level sizes (GB shown by many file systems), and 1000 for marketing sizes (manufacturer labels).</div>
+          </div>
+
+          <div>
+            <h3 class="font-medium mb-2">Use cases</h3>
+            <ul class="text-gray-700">
+              <li>Find how many MB a 3.5 GB file is (3.5 × 1024 = 3584 MB).</li>
+              <li>Estimate upload time: combine file size with your upload speed to plan transfers.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- Stopwatch -->
+      <article id="stopwatch">
+        <h2 class="text-2xl font-semibold mb-3">Stopwatch — Quick Guide</h2>
+        <p class="text-gray-600 mb-4">Measure elapsed time, pause/resume, and record lap times.</p>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="font-medium mb-2">How to use</h3>
+            <ol class="steps list-decimal pl-6 text-gray-700">
+              <li>Press <strong>Start</strong> to begin timing.</li>
+              <li>Use <strong>Lap</strong> to record intermediate splits; laps appear in a list.</li>
+              <li>Press <strong>Pause</strong> to stop the timer temporarily; press <strong>Resume</strong> to continue.</li>
+              <li>Press <strong>Reset</strong> to clear.</li>
+            </ol>
+            <div class="mt-4 tip text-sm">Tip: Use Lap to compare lap consistency (sports, tasks, experiments).</div>
+          </div>
+
+          <div>
+            <h3 class="font-medium mb-2">Examples</h3>
+            <ul class="text-gray-700">
+              <li>Time a workout set and record laps for each rep or round.</li>
+              <li>Use for cooking or time-boxed tasks to measure accurate durations.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- Countdown Timer -->
+      <article id="countdown">
+        <h2 class="text-2xl font-semibold mb-3">Countdown Timer — Quick Guide</h2>
+        <p class="text-gray-600 mb-4">Create timers for tasks, focus sessions, or events with optional audio alerts.</p>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="font-medium mb-2">How to use</h3>
+            <ol class="steps list-decimal pl-6 text-gray-700">
+              <li>Enter the amount of time or pick an end time and date.</li>
+              <li>Click <strong>Start</strong>. The timer counts down live.</li>
+              <li>When time ends, an alert sound plays (allow audio permissions in browser).</li>
+              <li>Use Pause and Reset to control the timer. Save presets for repeated tasks (if supported).</li>
+            </ol>
+            <div class="mt-4 tip text-sm">Tip: Use a gentle audio alert for focus sessions and a stronger one for important deadlines.</div>
+          </div>
+
+          <div>
+            <h3 class="font-medium mb-2">Examples</h3>
+            <ul class="text-gray-700">
+              <li>Pomodoro: 25 min work, 5 min break – create presets for fast start.</li>
+              <li>Event Countdown: input future date/time to show time left until the event.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- Dice Roller -->
+      <article id="dice">
+        <h2 class="text-2xl font-semibold mb-3">Dice Roller — Quick Guide</h2>
+        <p class="text-gray-600 mb-4">Roll single or multiple dice with custom sides — ideal for games and random decisions.</p>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="font-medium mb-2">How to use</h3>
+            <ol class="steps list-decimal pl-6 text-gray-700">
+              <li>Choose number of dice (e.g., 1, 2, 3...).</li>
+              <li>Select the type of die (d6, d20, custom sides like d10).</li>
+              <li>Click <strong>Roll</strong>. Results show individual rolls and total (if requested).</li>
+              <li>Use <strong>Keep / Drop</strong> options if tool supports advanced dice (RPG use).</li>
+            </ol>
+          </div>
+
+          <div>
+            <h3 class="font-medium mb-2">Examples</h3>
+            <ul class="text-gray-700">
+              <li>Roll 2d6: useful for tabletop games — shows both die values and sum.</li>
+              <li>Use a d20 for quick decision: roll once and check result.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- Spin Wheel -->
+      <article id="spinwheel">
+        <h2 class="text-2xl font-semibold mb-3">Spin Wheel — Quick Guide</h2>
+        <p class="text-gray-600 mb-4">Create a wheel with segments to randomly pick winners, chores, or options.</p>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="font-medium mb-2">How to use</h3>
+            <ol class="steps list-decimal pl-6 text-gray-700">
+              <li>Add segments (names/options) into the list. You can include colors and weights if available.</li>
+              <li>Press <strong>Spin</strong>. The wheel animates and selects a random segment.</li>
+              <li>Use repeat/once options to determine whether the chosen option is removed for next spins.</li>
+            </ol>
+            <div class="mt-4 tip text-sm">Tip: Use weights to bias selections (useful for probability testing or giving some options higher chance).</div>
+          </div>
+
+          <div>
+            <h3 class="font-medium mb-2">Examples</h3>
+            <ul class="text-gray-700">
+              <li>Classroom reward: add student names and spin to choose who answers.</li>
+              <li>Random meal: list meal options and spin to decide dinner.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- Head & Tails -->
+      <article id="headtails">
+        <h2 class="text-2xl font-semibold mb-3">Head & Tails — Quick Guide</h2>
+        <p class="text-gray-600 mb-4">Flip a virtual coin for quick binary decisions.</p>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="font-medium mb-2">How to use</h3>
+            <ol class="steps list-decimal pl-6 text-gray-700">
+              <li>Press <strong>Flip</strong>. The coin flips and shows Head or Tail.</li>
+              <li>Optionally set number of flips to get frequency stats.</li>
+              <li>Use for 50/50 choices where a fair coin is needed.</li>
+            </ol>
+          </div>
+
+          <div>
+            <h3 class="font-medium mb-2">Notes</h3>
+            <p class="text-gray-700">The result is random; if you need repeatability, seedable PRNGs are required (not provided here).</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Emoji Picker -->
+      <article id="emoji">
+        <h2 class="text-2xl font-semibold mb-3">Emoji Picker — Quick Guide</h2>
+        <p class="text-gray-600 mb-4">Search and copy emojis, browse categories, and access commonly used emoji sequences.</p>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="font-medium mb-2">How to use</h3>
+            <ol class="steps list-decimal pl-6 text-gray-700">
+              <li>Search by name (e.g., "smile", "heart") using the search bar.</li>
+              <li>Browse categories (Smileys, Food, Travel, Objects, etc.).</li>
+              <li>Tap an emoji to copy it to clipboard — paste into messages, social media, or documents.</li>
+            </ol>
+            <div class="mt-4 tip text-sm">Tip: Click recently-used to see a quick history of your pasted emojis.</div>
+          </div>
+
+          <div>
+            <h3 class="font-medium mb-2">Examples</h3>
+            <p class="text-gray-700">Use emoji combos for quick reactions: <code>🎉👏🔥</code> — copy and paste into your message field.</p>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- Call to action -->
+    <section class="text-center mt-12">
+      <a href="index.html" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-medium transition">Go to Home</a>
+      <p class="text-sm text-gray-500 mt-3">Need help? Visit <a href="contact.html" class="text-blue-600 hover:underline">Contact</a> to email support.</p>
+    </section>
+  </main>
+
+  <!-- Footer (consistent with your site) -->
+  <footer class="bg-white border-t border-gray-200 mt-16">
+    <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 text-sm text-gray-600">
+      <div>
+        <div class="flex items-center space-x-2 mb-4">
+          <img src="faviconnob.png" alt="Aivorize Logo" class="w-8 h-8 rounded-lg shadow-md">
+          <h2 class="text-lg font-bold text-gray-900">Aivorize</h2>
+        </div>
+        <p class="text-gray-500 leading-relaxed">
+          Aivorize is a premium hub of free online tools crafted for speed, simplicity and privacy.
+        </p>
+        <p class="mt-4 text-gray-500">
+          Built by <a href="https://kaifurrehman.netlify.app/" target="_blank" class="text-blue-600 hover:underline">Kaif ur Rehman</a>.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="text-base font-semibold text-gray-800 mb-3">Quick Links</h3>
+        <ul class="space-y-2">
+          <li><a href="about.html" class="hover:text-blue-600 transition-colors">About</a></li>
+          <li><a href="privacy.html" class="hover:text-blue-600 transition-colors">Privacy Policy</a></li>
+          <li><a href="terms.html" class="hover:text-blue-600 transition-colors">Terms & Conditions</a></li>
+          <li><a href="contact.html" class="hover:text-blue-600 transition-colors">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-base font-semibold text-gray-800 mb-3">Connect With Us</h3>
+        <div class="flex space-x-4 text-lg text-gray-500">
+          <a href="https://www.youtube.com/@aivorize" target="_blank" class="hover:text-red-600"><i class="fab fa-youtube"></i></a>
+          <a href="https://www.instagram.com/aivorize" target="_blank" class="hover:text-pink-600"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.tiktok.com/@aivorizeofficial" target="_blank" class="hover:text-black"><i class="fab fa-tiktok"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-gray-100 py-4">
+      <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-500">
+        <p>&copy; <span id="currentYear"></span> Aivorize. All rights reserved.</p>
+        <p class="mt-2 sm:mt-0">Designed with ❤️ by <a href="https://kaifurrehman.netlify.app/" target="_blank" class="text-blue-600 hover:underline">Kaif ur Rehman</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Set year
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+    // Accessibility: smooth focus outlines for keyboard users
+    document.addEventListener('keyup', (e) => { if (e.key === 'Tab') document.documentElement.classList.add('show-focus'); });
+  </script>
+</body>
+</html>

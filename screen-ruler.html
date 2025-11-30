@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Basic Meta -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Screen Ruler – Aivorize</title>
+  <meta name="description" content="Use Aivorize's free online screen ruler to measure screen width in pixels. Simple, responsive, and accurate." />
+  <meta name="keywords" content="Screen ruler, Online ruler, Pixel ruler, Measure screen size, Aivorize tools" />
+  <meta name="author" content="Kaif ur Rehman" />
+
+<!-- Favicons --><!-- Favicon -->
+<link rel="icon" type="image/png" href="faviconnob.png" sizes="32x32" />
+<link rel="apple-touch-icon" href="faviconnob.png" />
+<meta name="theme-color" content="#007aff">
+<meta name="msapplication-TileImage" content="faviconnob.png">
+<meta name="msapplication-TileColor" content="#007aff">
+
+
+<!-- Structured Data for Google Logo -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Aivorize",
+  "url": "https://aivorize.netlify.app",
+  "logo": "https://aivorize.netlify.app/favicon/android-chrome-512x512.png"
+}
+</script>
+
+
+
+  <!-- Open Graph (Facebook, LinkedIn, WhatsApp) -->
+  <meta property="og:title" content="Screen Ruler – Aivorize" />
+  <meta property="og:description" content="A fast, interactive tool to measure pixel width across your screen. Built with love by Kaif ur Rehman." />
+  <meta property="og:image" content="https://videos.openai.com/vg-assets/assets%2Ftask_01k1shmanqecka9tby9n2qwshp%2F1754277773_img_1.webp" />
+  <meta property="og:url" content="https://yourdomain.com/screen-ruler" />
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Screen Ruler – Aivorize" />
+  <meta name="twitter:description" content="Measure pixels on screen directly with this smart online ruler tool." />
+  <meta name="twitter:image" content="https://videos.openai.com/vg-assets/assets%2Ftask_01k1shmanqecka9tby9n2qwshp%2F1754277773_img_1.webp" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3918862480266328" crossorigin="anonymous"></script>
+</head>
+
+  <style>
+    * {margin: 0;padding: 0;box-sizing: border-box;font-family: 'Inter', sans-serif;}
+    body {background: #f2f9ff;color: #1a1a1a;transition: background 0.3s, color 0.3s;}
+    .dark-mode {background: #0d1117;color: #f5f5f5;}
+    nav {
+      position: fixed;top: 0;left: 0;width: 100%;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+      display: flex;justify-content: space-between;align-items: center;
+      padding: 1rem 2rem;z-index: 1000;
+    }
+    .dark-mode nav {background: rgba(22, 27, 34, 0.85);}
+    .logo {font-size: 1.6rem;font-weight: bold;color: #0d47a1;}
+    .dark-mode .logo {color: #90caf9;}
+    .nav-right {display: flex;align-items: center;gap: 1rem;}
+    nav ul {display: flex;gap: 1rem;list-style: none;}
+    nav ul li a {text-decoration: none;color: #0d47a1;font-weight: 600;}
+    nav ul li a:hover {color: #1565c0;}
+    .dark-mode nav ul li a {color: #90caf9;}
+    .toggle-dark {
+      background: linear-gradient(to right, #0d47a1, #1976d2);
+      border: none;font-size: 1.1rem;cursor: pointer;
+      color: #fff;padding: 0.4rem 0.8rem;border-radius: 8px;
+    }
+    .toggle-dark i {pointer-events: none;}
+
+    main {
+      padding-top: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .ruler-container {
+      width: 100%;
+      overflow-x: auto;
+      padding: 1rem 0;
+    }
+
+    .ruler {
+      position: relative;
+      height: 50px;
+      border-top: 2px solid #0d47a1;
+      margin: 0 auto;
+      width: 3000px;
+    }
+
+    .tick {
+      position: absolute;
+      width: 1px;
+      background: #0d47a1;
+      bottom: 0;
+    }
+
+    .tick.small {height: 10px;}
+    .tick.medium {height: 20px;}
+    .tick.large {
+      height: 30px;
+      font-size: 12px;
+      color: #0d47a1;
+    }
+
+    .dark-mode .tick {background: #90caf9;}
+    .dark-mode .tick.large {color: #90caf9;}
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.9rem;
+      color: #777;
+    }
+
+    footer a {
+      color: #0d47a1;
+      text-decoration: none;
+      margin: 0 0.3rem;
+    }
+
+    footer a:hover {text-decoration: underline;}
+    .dark-mode footer a {color: #90caf9;}
+  </style>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8PS60F1CVW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-8PS60F1CVW');
+</script>
+</head>
+<body>
+  <nav>
+    <div class="logo" aria-label="Aivorize logo">
+  <img src="faviconnob.png" alt="Aivorize Logo" style="height:40px; vertical-align:middle; margin-right:8px;">
+  <span style="font-weight:700; color:#0d47a1;">Aivorize</span>
+</div>
+    <div class="nav-right">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+      </ul>
+      <button class="toggle-dark" onclick="toggleDarkMode()" id="darkToggle">
+        <i class="fas fa-moon"></i>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <div class="ruler-container">
+      <div class="ruler" id="ruler"></div>
+    </div>
+  </main>
+
+  <footer style="width:100%; text-align:center; font-size:0.9rem; padding:40px 10px; margin-top:40px; display:flex; flex-direction:column; align-items:center; justify-content:center; border-top:1px solid rgba(0,0,0,0.1); transition:all 0.3s ease;">
+  <p style="margin-bottom:8px; color:inherit;">
+    © <span id="year"></span> <strong>Aivorize</strong><br>
+    Created by 
+    <a href="https://kaifurrehman.netlify.app/" target="_blank" rel="noopener noreferrer" 
+       style="color:#0077ff; text-decoration:none; font-weight:600;">
+       Kaif ur Rehman
+    </a>
+  </p>
+
+  <p style="margin-bottom:8px;">
+    <a href="privacy-policy.html" style="color:#0077ff; text-decoration:none; margin:0 8px;">Privacy Policy</a> |
+    <a href="terms.html" style="color:#0077ff; text-decoration:none; margin:0 8px;">Terms</a> |
+    <a href="contact.html" style="color:#0077ff; text-decoration:none; margin:0 8px;">Contact</a>
+  </p>
+
+  <p style="color:#777;">All rights reserved • Designed with ❤️ by Kaif ur Rehman</p>
+
+  <script>
+    // Auto Year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Sync with Dark Mode
+    const footer = document.querySelector("footer");
+    const applyFooterTheme = () => {
+      if (document.body.classList.contains("dark-mode")) {
+        footer.style.borderTop = "1px solid rgba(255,255,255,0.1)";
+        footer.style.color = "#aaa";
+      } else {
+        footer.style.borderTop = "1px solid rgba(0,0,0,0.1)";
+        footer.style.color = "#444";
+      }
+    };
+    applyFooterTheme();
+    const observer = new MutationObserver(applyFooterTheme);
+    observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+  </script>
+</footer>
+
+
+  <script>
+    function toggleDarkMode() {
+      const body = document.body;
+      const toggleBtn = document.getElementById('darkToggle');
+      const icon = toggleBtn.querySelector('i');
+      const isDark = body.classList.toggle('dark-mode');
+      localStorage.setItem('Aivorize-theme', isDark ? 'dark' : 'light');
+      icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+    }
+
+    window.onload = function () {
+      const savedTheme = localStorage.getItem('Aivorize-theme');
+      const body = document.body;
+      const toggleBtn = document.getElementById('darkToggle');
+      const icon = toggleBtn.querySelector('i');
+      if (savedTheme === 'dark') {
+        body.classList.add('dark-mode');
+        icon.className = 'fas fa-sun';
+      } else {
+        icon.className = 'fas fa-moon';
+      }
+
+      const ruler = document.getElementById('ruler');
+      for (let i = 0; i <= 3000; i += 5) {
+        const tick = document.createElement('div');
+        tick.classList.add('tick');
+
+        if (i % 100 === 0) {
+          tick.classList.add('large');
+          tick.innerHTML = `<span style="position: absolute; top: 32px; left: -10px;">${i}px</span>`;
+        } else if (i % 50 === 0) {
+          tick.classList.add('medium');
+        } else {
+          tick.classList.add('small');
+        }
+
+        tick.style.left = `${i}px`;
+        ruler.appendChild(tick);
+      }
+    };
+  </script>
+</body>
+</html>

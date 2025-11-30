@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>Stopwatch - Aivorize | Fast & Premium Tools</title>
+  <link rel="icon" href="faviconnob.png" />
+
+  <!-- Tailwind & Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <meta name="description" content="Aivorize Stopwatch — start, stop, record laps, and share. Soft beep on stop, local memory, scrollable lap table." />
+<!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8PS60F1CVW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-8PS60F1CVW');
+  </script>
+  <!-- End Google Analytics -->
+  <!-- Google AdSense -->
+<script async
+  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3918862480266328"
+  crossorigin="anonymous">
+</script>
+<!-- End Google AdSense -->
+
+  <style>
+    :root {
+      --glass-bg: rgba(255,255,255,0.75);
+      --glass-border: rgba(255,255,255,0.6);
+      --accent-from: #3b82f6;
+      --accent-to: #10b981;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #fcfdfe;
+      color: #1f2937;
+      background-image:
+        radial-gradient(at 10% 10%, rgba(59,130,246,0.08), transparent),
+        radial-gradient(at 90% 90%, rgba(16,185,129,0.03), transparent);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .glass-header {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background-color: var(--glass-bg);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .gradient-text {
+      background: linear-gradient(to right, var(--accent-from), var(--accent-to));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .glass-modal {
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.6);
+      border-radius: 1rem;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+    }
+
+    .time-display {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      font-size: clamp(2rem, 8vw, 4.5rem);
+    }
+
+    .scrollbar-hide::-webkit-scrollbar { width: 6px; }
+    .scrollbar-hide::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.08); border-radius: 8px; }
+
+    #shareModal {
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    @media (max-width:768px) {
+      .controls button { flex: 1; font-size: 0.9rem; padding: 0.7rem 0; }
+      .grid { grid-template-columns: 1fr; }
+      aside { order: 2; margin-top: 1.5rem; }
+    }
+
+    @media (max-width:420px) {
+      main { padding: 1rem; }
+      .time-display { font-size: 2rem; }
+      header img { width: 28px; height: 28px; }
+      header a { font-size: 1rem; }
+    }
+  </style>
+</head>
+
+<body class="selection:bg-blue-200 transition-colors duration-300">
+
+  <!-- Header -->
+  <header class="glass-header fixed top-0 left-0 right-0 h-14 flex items-center justify-between px-4 md:px-6 z-50">
+    <div class="flex items-center space-x-3">
+      <img src="faviconnob.png" alt="Aivorize Logo" class="w-8 h-8 rounded-lg shadow-sm" />
+      <a href="index.html" class="text-xl font-extrabold text-gray-900 hover:text-blue-600 transition-colors">Aivorize</a>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="max-w-5xl mx-auto pt-24 pb-20 px-4 md:px-8">
+
+    <section class="text-center mb-8">
+      <h1 class="text-4xl md:text-5xl font-extrabold gradient-text mb-2">Stopwatch</h1>
+      <p class="text-gray-600 max-w-2xl mx-auto">Start, stop, record laps, and share your results. Laps are saved locally so they persist across reloads.</p>
+    </section>
+
+    <div class="grid gap-6 md:grid-cols-3 items-start">
+
+      <!-- Stopwatch Card -->
+      <div class="md:col-span-2 bg-white glass-modal p-6 rounded-2xl shadow-lg flex flex-col items-center">
+        <div id="displayTime" class="time-display mb-3" aria-live="polite">00:00:00.00</div>
+        <div class="text-sm text-gray-600 mb-5">Elapsed time (hours : minutes : seconds . centis)</div>
+
+        <!-- Controls -->
+        <div class="flex flex-wrap justify-center gap-3 controls mb-4 w-full">
+          <button id="startBtn" class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-full font-medium flex items-center gap-2 shadow-sm"><i class="fa fa-play"></i><span id="startLabel">Start</span></button>
+          <button id="lapBtn" class="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-full font-medium flex items-center gap-2 shadow-sm" disabled><i class="fa fa-flag"></i>Lap</button>
+          <button id="resetBtn" class="bg-red-50 hover:bg-red-100 text-red-600 px-4 py-2 rounded-full font-medium flex items-center gap-2 shadow-sm"><i class="fa fa-rotate-left"></i>Reset</button>
+          <button id="shareBtn" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-full font-medium flex items-center gap-2 shadow-sm"><i class="fa fa-share-nodes"></i>Share</button>
+        </div>
+
+        <div class="w-full flex justify-between text-xs text-gray-500">
+          <div>Precision: <strong>centiseconds</strong></div>
+          <div id="lapCount">Laps: 0</div>
+        </div>
+      </div>
+
+      <!-- Lap List -->
+      <aside class="bg-white glass-modal p-4 rounded-2xl shadow-lg h-full flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-lg font-semibold text-gray-800">Laps</h3>
+          <div class="text-sm text-gray-500">Saved locally</div>
+        </div>
+
+        <div class="overflow-y-auto grow scrollbar-hide" style="max-height:420px;">
+          <table class="w-full text-sm" id="lapsTable" role="table">
+            <thead class="sticky top-0 bg-white/80 backdrop-blur z-10">
+              <tr class="text-left text-xs text-gray-500">
+                <th class="py-2 px-2">#</th>
+                <th class="py-2 px-2">Lap Time</th>
+                <th class="py-2 px-2">Total</th>
+              </tr>
+            </thead>
+            <tbody id="lapsBody"></tbody>
+          </table>
+        </div>
+
+        <div class="mt-4 flex gap-2">
+          <button id="copyLaps" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full font-medium"><i class="fa fa-copy mr-2"></i>Copy</button>
+          <button id="exportCSV" class="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-full font-medium"><i class="fa fa-file-csv mr-2"></i>CSV</button>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Share Modal -->
+  <div id="shareModal" class="fixed inset-0 hidden items-center justify-center p-4 z-50">
+    <div class="absolute inset-0 bg-black/40"></div>
+    <div class="relative max-w-sm w-full glass-modal p-4 rounded-xl z-20">
+      <div class="flex justify-between items-center mb-3">
+        <h4 class="font-semibold">Share Stopwatch</h4>
+        <button id="closeShare" class="text-gray-600 hover:text-gray-900"><i class="fa fa-xmark"></i></button>
+      </div>
+
+      <p class="text-sm text-gray-600 mb-3">Share the stopwatch or copy laps. Works with WhatsApp or clipboard.</p>
+
+      <div class="grid gap-3">
+        <button id="shareWhats" class="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:opacity-90 text-white px-4 py-2 rounded-full font-medium"><i class="fab fa-whatsapp"></i>WhatsApp</button>
+        <button id="copyLinkBtn" class="w-full flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-full font-medium"><i class="fa fa-link"></i>Copy Link</button>
+        <button id="copyLapsBtn" class="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full font-medium"><i class="fa fa-list"></i>Copy Laps</button>
+      </div>
+    </div>
+  </div>
+
+ 
+  <!-- Footer -->
+  <footer class="bg-white border-t border-gray-200 mt-16">
+    <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 text-sm text-gray-600">
+
+      <!-- Left -->
+      <div>
+        <div class="flex items-center space-x-2 mb-4">
+          <img src="faviconnob.png" alt="Aivorize Logo" class="w-8 h-8 rounded-lg shadow-md">
+          <h2 class="text-lg font-bold text-gray-900">Aivorize</h2>
+        </div>
+        <p class="text-gray-500 leading-relaxed">
+          Aivorize is your premium hub for free online tools, calculators, and productivity utilities — crafted for speed, simplicity, and elegance.
+        </p>
+        <p class="mt-4 text-gray-500">
+          Designed & built by 
+          <a href="https://kaifurrehman.netlify.app/" target="_blank" class="text-blue-600 font-medium hover:underline">
+            Kaif ur Rehman
+          </a>.
+        </p>
+      </div>
+
+      <!-- Middle -->
+      <div>
+        <h3 class="text-base font-semibold text-gray-800 mb-3">Quick Links</h3>
+        <ul class="space-y-2">
+          <li><a href="about.html" class="hover:text-blue-600 transition-colors">About</a></li>
+          <li><a href="privacy.html" class="hover:text-blue-600 transition-colors">Privacy Policy</a></li>
+          <li><a href="terms.html" class="hover:text-blue-600 transition-colors">Terms & Conditions</a></li>
+          <li><a href="learn.html" class="hover:text-blue-600 transition-colors">Learn</a></li>
+          <li><a href="contact.html" class="hover:text-blue-600 transition-colors">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Right -->
+      <div>
+        <h3 class="text-base font-semibold text-gray-800 mb-3">Connect With Us</h3>
+        <div class="space-y-4">
+          <div>
+            <h4 class="text-gray-800 font-medium mb-1">Aivorize</h4>
+            <div class="flex space-x-4 text-lg">
+              <a href="https://www.youtube.com/@aivorize" target="_blank" class="hover:text-red-600"><i class="fab fa-youtube"></i></a>
+              <a href="https://www.instagram.com/aivorize" target="_blank" class="hover:text-pink-600"><i class="fab fa-instagram"></i></a>
+              <a href="https://www.tiktok.com/@aivorizeofficial" target="_blank" class="hover:text-black"><i class="fab fa-tiktok"></i></a>
+            </div>
+          </div>
+
+          <div>
+            <h4 class="text-gray-800 font-medium mb-1">Kaif ur Rehman</h4>
+            <div class="flex space-x-4 text-lg">
+              <a href="https://www.youtube.com/@kaif-ur-rehman" target="_blank" class="hover:text-red-600"><i class="fab fa-youtube"></i></a>
+              <a href="https://www.instagram.com/kaif.ur.rehman" target="_blank" class="hover:text-pink-600"><i class="fab fa-instagram"></i></a>
+              <a href="https://www.tiktok.com/@kaif.urrehman" target="_blank" class="hover:text-black"><i class="fab fa-tiktok"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-gray-100 py-4">
+      <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-500">
+        <p>&copy; <span id="currentYear"></span> Aivorize. All rights reserved.</p>
+        <p class="mt-2 sm:mt-0">Crafted with ❤️ by <a href="https://kaifurrehman.netlify.app/" target="_blank" class="text-blue-600 hover:underline font-medium">Kaif ur Rehman</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script -->
+  <script>
+    // --- Stopwatch core ---
+    function pad(n, z=2) { return n.toString().padStart(z,'0'); }
+    function formatTime(ms) {
+      const c = Math.floor((ms % 1000) / 10);
+      let s = Math.floor(ms / 1000);
+      const h = Math.floor(s / 3600);
+      s %= 3600;
+      const m = Math.floor(s / 60);
+      s %= 60;
+      return `${pad(h)}:${pad(m)}:${pad(s)}.${pad(c,2)}`;
+    }
+
+    let running=false, startTs=0, elapsed=0, rafId=null, laps=[];
+    const display=document.getElementById('displayTime');
+    const startBtn=document.getElementById('startBtn');
+    const lapBtn=document.getElementById('lapBtn');
+    const startLabel=document.getElementById('startLabel');
+    const lapsBody=document.getElementById('lapsBody');
+    const lapCount=document.getElementById('lapCount');
+
+    function updateDisplay(ms){ display.textContent=formatTime(ms||0); }
+    function tick(){ const now=performance.now(); updateDisplay(elapsed+(running?(now-startTs):0)); rafId=requestAnimationFrame(tick); }
+
+    function startStop(){
+      if(!running){ startTs=performance.now(); running=true;
+        startLabel.textContent='Stop'; startBtn.classList.replace('bg-green-600','bg-red-600'); startBtn.querySelector('i').className='fa fa-stop'; lapBtn.disabled=false;
+        if(!rafId) tick();
+      }else{
+        running=false; elapsed+=performance.now()-startTs;
+        startLabel.textContent='Start'; startBtn.classList.replace('bg-red-600','bg-green-600'); startBtn.querySelector('i').className='fa fa-play';
+        cancelAnimationFrame(rafId); rafId=null; lapBtn.disabled=true; updateDisplay(elapsed); saveState();
+      }
+    }
+
+    function resetAll(){ running=false; elapsed=0; laps=[]; updateDisplay(0); renderLaps(); lapBtn.disabled=true; startLabel.textContent='Start'; startBtn.classList.replace('bg-red-600','bg-green-600'); startBtn.querySelector('i').className='fa fa-play'; saveState(); }
+    function recordLap(){ const total=elapsed+(running?(performance.now()-startTs):0); const last=laps.length?laps[laps.length-1].total:0; const lap=Math.max(0,total-last); laps.push({i:laps.length+1,lap, total}); renderLaps(); saveState(); }
+
+    function renderLaps(){
+      lapsBody.innerHTML=laps.length?laps.slice().reverse().map(L=>`<tr class="border-b border-gray-100"><td class="py-2 px-2 text-xs text-gray-600">#${L.i}</td><td class="py-2 px-2 text-sm font-medium text-gray-900">${formatTime(L.lap)}</td><td class="py-2 px-2 text-sm text-gray-700">${formatTime(L.total)}</td></tr>`).join(''):`<tr><td colspan="3" class="py-4 text-center text-gray-400">No laps recorded</td></tr>`;
+      lapCount.textContent=`Laps: ${laps.length}`;
+    }
+
+    const STORAGE='aivorize_stopwatch';
+    function saveState(){ localStorage.setItem(STORAGE,JSON.stringify({elapsed,laps})); }
+    function loadState(){ const s=localStorage.getItem(STORAGE); if(!s)return; const d=JSON.parse(s); elapsed=d.elapsed||0; laps=d.laps||[]; updateDisplay(elapsed); renderLaps(); }
+
+    document.getElementById('copyLaps').onclick=()=>navigator.clipboard.writeText(laps.map(L=>`#${L.i} ${formatTime(L.lap)} (${formatTime(L.total)})`).join('\n')||'No laps');
+    document.getElementById('exportCSV').onclick=()=>{if(!laps.length)return;const csv='index,lap_ms,total_ms\n'+laps.map(L=>`${L.i},${L.lap},${L.total}`).join('\n');const b=new Blob([csv],{type:'text/csv'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download='laps.csv';a.click();URL.revokeObjectURL(u);};
+
+    // Share modal
+    const modal=document.getElementById('shareModal');
+    document.getElementById('shareBtn').onclick=()=>{modal.classList.remove('hidden');modal.style.display='flex';};
+    document.getElementById('closeShare').onclick=()=>{modal.classList.add('hidden');modal.style.display='none';};
+    document.getElementById('shareWhats').onclick=()=>{const msg=`Aivorize Stopwatch\nTime: ${display.textContent}\nLaps: ${laps.length}`;window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`,'_blank');};
+    document.getElementById('copyLinkBtn').onclick=()=>navigator.clipboard.writeText(`Aivorize Stopwatch - ${display.textContent}\nhttps://aivorize.netlify.app/stopwatch`);
+    document.getElementById('copyLapsBtn').onclick=()=>navigator.clipboard.writeText(laps.map(L=>`#${L.i} ${formatTime(L.lap)} (${formatTime(L.total)})`).join('\n'));
+
+    // Events
+    startBtn.onclick=startStop; lapBtn.onclick=()=>running&&recordLap(); document.getElementById('resetBtn').onclick=resetAll;
+    window.onkeydown=e=>{if(e.code==='Space'){e.preventDefault();startStop();}if(e.key==='l')recordLap();if(e.key==='r')resetAll();};
+
+    loadState(); renderLaps(); updateDisplay(elapsed);
+    document.getElementById('currentYear').textContent=new Date().getFullYear();
+  </script>
+</body>
+</html>

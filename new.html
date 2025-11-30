@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Coding Quest - Aivorize</title>
+  <meta name="description" content="Coding Quest game prototype by Kaif ur Rehman on Aivorize" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background: #f2f9ff;
+      color: #1a1a1a;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 100px 20px 50px;
+      transition: background 0.3s, color 0.3s;
+    }
+    .dark-mode {
+      background: #0d1117;
+      color: #f5f5f5;
+    }
+    nav {
+      position: fixed; top: 0; left: 0; width: 100%;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 2rem;
+      z-index: 1000;
+    }
+    .dark-mode nav {
+      background: rgba(22, 27, 34, 0.85);
+    }
+    .logo {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: #0d47a1;
+    }
+    .dark-mode .logo {
+      color: #90caf9;
+    }
+    .nav-right button {
+      background: linear-gradient(to right, #0d47a1, #1976d2);
+      border: none;
+      color: #fff;
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+    main {
+      background: rgba(255,255,255,0.25);
+      border-radius: 20px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 2rem 2.5rem;
+      max-width: 700px;
+      width: 100%;
+      color: #0d47a1;
+    }
+    .dark-mode main {
+      background: rgba(28,28,28,0.6);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #90caf9;
+    }
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 2rem;
+      margin-bottom: 1.2rem;
+      text-align: center;
+    }
+    p.story-text {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+      text-align: center;
+    }
+    .question-section {
+      margin-bottom: 1.5rem;
+    }
+    .question {
+      font-weight: 600;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    .answers button {
+      background: #0d47a1;
+      color: white;
+      border: none;
+      padding: 0.6rem 1rem;
+      margin: 0.3rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+    .answers button:hover {
+      background: #1565c0;
+    }
+    .dark-mode .answers button {
+      background: #1976d2;
+    }
+    .dark-mode .answers button:hover {
+      background: #4791db;
+    }
+    .hint {
+      background: #e3f2fd;
+      padding: 0.7rem 1rem;
+      border-radius: 12px;
+      font-style: italic;
+      margin-bottom: 1.5rem;
+      color: #0d47a1;
+    }
+    .dark-mode .hint {
+      background: #224a7a;
+      color: #90caf9;
+    }
+    .progress {
+      font-weight: 600;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .badge {
+      background: #43a047;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 12px;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    footer {
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #777;
+    }
+    footer a {
+      color: #0d47a1;
+      text-decoration: none;
+      margin: 0 0.3rem;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+    .dark-mode footer a {
+      color: #90caf9;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo" aria-label="Aivorize logo">
+  <img src="faviconnob.png" alt="Aivorize Logo" style="height:40px; vertical-align:middle; margin-right:8px;">
+  <span style="font-weight:700; color:#0d47a1;">Aivorize</span>
+</div>
+    <div class="nav-right">
+      <button onclick="toggleDarkMode()" id="darkToggle">
+        <i class="fas fa-moon"></i>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <h1>Coding Quest</h1>
+    <p class="story-text" id="story">
+      Welcome, hero! The digital world is broken, and only your coding skills can fix it.  
+      Solve puzzles, learn programming, and unlock your destiny.
+    </p>
+
+    <div class="question-section" id="question-section">
+      <div class="question" id="question-text"></div>
+      <div class="answers" id="answers"></div>
+    </div>
+
+    <div class="hint" id="hint" style="display:none;"></div>
+
+    <div class="progress" id="progress"></div>
+    <div class="badge" id="badge" style="display:none;">Badge Unlocked: Novice Coder</div>
+  </main>
+
+  <footer>
+    © 2025 Aivorize | Built by Kaif ur Rehman<br />
+    <a href="https://www.instagram.com/kaif.ur.rehman/" target="_blank" rel="noopener noreferrer">Instagram</a> |
+    <a href="https://www.youtube.com/@kaif-ur-rehman" target="_blank" rel="noopener noreferrer">YouTube</a>
+  </footer>
+
+  <script>
+    const questions = [
+      {
+        question: "What will this JavaScript code output?\nconsole.log(typeof null);",
+        answers: [
+          { text: "'null'", correct: false },
+          { text: "'object'", correct: true },
+          { text: "'undefined'", correct: false },
+          { text: "'boolean'", correct: false }
+        ],
+        hint: "In JavaScript, null is considered a special type of object."
+      },
+      {
+        question: "Which HTML tag is used to include JavaScript?",
+        answers: [
+          { text: "<js>", correct: false },
+          { text: "<script>", correct: true },
+          { text: "<javascript>", correct: false },
+          { text: "<code>", correct: false }
+        ],
+        hint: "The tag is named after its purpose — to include scripting code."
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let badgeUnlocked = false;
+
+    const questionText = document.getElementById('question-text');
+    const answersDiv = document.getElementById('answers');
+    const hintDiv = document.getElementById('hint');
+    const progressDiv = document.getElementById('progress');
+    const badgeDiv = document.getElementById('badge');
+
+    function showQuestion() {
+      hintDiv.style.display = 'none';
+      badgeDiv.style.display = 'none';
+
+      const q = questions[currentQuestion];
+      questionText.textContent = q.question;
+      answersDiv.innerHTML = '';
+
+      q.answers.forEach((answer, index) => {
+        const btn = document.createElement('button');
+        btn.textContent = answer.text;
+        btn.onclick = () => selectAnswer(answer.correct);
+        answersDiv.appendChild(btn);
+      });
+
+      progressDiv.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+    }
+
+    function selectAnswer(correct) {
+      if (correct) {
+        score++;
+        alert("Correct! Well done.");
+      } else {
+        alert("Oops! That's not correct.");
+        showHint();
+        return; // allow retry by not moving to next question
+      }
+
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        showQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showHint() {
+      hintDiv.style.display = 'block';
+      hintDiv.textContent = questions[currentQuestion].hint;
+    }
+
+    function showResult() {
+      questionText.textContent = "Congratulations! You completed the Coding Quest.";
+      answersDiv.innerHTML = '';
+      hintDiv.style.display = 'none';
+      progressDiv.textContent = `Your score: ${score} / ${questions.length}`;
+
+      if(score >= 1 && !badgeUnlocked) {
+        badgeDiv.style.display = 'block';
+        badgeUnlocked = true;
+        saveProgress();
+      }
+    }
+
+    function saveProgress() {
+      localStorage.setItem('codingQuestScore', score);
+      localStorage.setItem('codingQuestBadge', badgeUnlocked);
+    }
+
+    function loadProgress() {
+      const savedScore = localStorage.getItem('codingQuestScore');
+      const savedBadge = localStorage.getItem('codingQuestBadge');
+      if(savedScore !== null) score = parseInt(savedScore);
+      if(savedBadge === 'true') {
+        badgeUnlocked = true;
+        badgeDiv.style.display = 'block';
+      }
+    }
+
+    function toggleDarkMode() {
+      const body = document.body;
+      const toggleBtn = document.getElementById('darkToggle');
+      const icon = toggleBtn.querySelector('i');
+      const isDark = body.classList.toggle('dark-mode');
+      localStorage.setItem('Aivorize-theme', isDark ? 'dark' : 'light');
+      icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+    }
+
+    window.onload = function() {
+      loadProgress();
+      showQuestion();
+
+      const savedTheme = localStorage.getItem('Aivorize-theme');
+      const body = document.body;
+      const toggleBtn = document.getElementById('darkToggle');
+      const icon = toggleBtn.querySelector('i');
+      if (savedTheme === 'dark') {
+        body.classList.add('dark-mode');
+        icon.className = 'fas fa-sun';
+      } else {
+        icon.className = 'fas fa-moon';
+      }
+    }
+  </script>
+</body>
+</html>

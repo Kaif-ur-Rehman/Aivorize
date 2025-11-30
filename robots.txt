@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://Aivorize.netlify.app/sitemap.xml

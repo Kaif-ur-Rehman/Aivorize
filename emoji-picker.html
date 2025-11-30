@@ -1,0 +1,804 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Emoji Picker — Aivorize</title>
+    <link rel="icon" href="faviconnob.png" />
+    <meta name="description" content="Aivorize Emoji Picker — search, categories, copy on click, long-press for description, recent list, share." />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+<!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8PS60F1CVW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-8PS60F1CVW');
+  </script>
+  <!-- End Google Analytics -->    
+   
+  <!-- Google AdSense -->
+<script async
+  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3918862480266328"
+  crossorigin="anonymous">
+</script>
+<!-- End Google AdSense -->
+
+    <style>
+        :root{
+            --glass-bg: rgba(255,255,255,0.88);
+            --accent-from:#3b82f6;
+            --accent-to:#10b981;
+            --tile-size:52px;
+        }
+        html,body{height:100%}
+        body{
+            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background-color:#fcfdfe;
+            background-image:
+                radial-gradient(at 10% 10%, rgba(59,130,246,0.06), transparent),
+                radial-gradient(at 90% 90%, rgba(16,185,129,0.02), transparent);
+            color:#0f172a;
+            -webkit-font-smoothing:antialiased;
+        }
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 0 8px 30px rgba(16,24,40,0.06);
+            border-radius: 14px;
+        }
+        .gradient-text{
+            background: linear-gradient(to right,var(--accent-from),var(--accent-to));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .emoji-tile {
+            width:var(--tile-size);
+            height:var(--tile-size);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            border-radius:10px;
+            cursor:pointer;
+            transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+            user-select: none;
+            font-size:26px;
+            background: transparent;
+        }
+        .emoji-tile:active { transform: scale(.96); }
+        .emoji-tile:hover { transform: scale(1.12); box-shadow: 0 8px 18px rgba(16,24,40,0.06); background: rgba(0,0,0,0.02); }
+
+        .tooltip {
+            position: fixed;
+            background: rgba(15,23,42,0.96);
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 14px;
+            z-index: 60;
+            white-space: nowrap;
+            transform: translate(-50%, -120%);
+            pointer-events: none;
+            box-shadow: 0 8px 30px rgba(2,6,23,0.4);
+        }
+
+        .small-toast {
+            position: fixed;
+            left: 50%;
+            bottom: 36px;
+            transform: translateX(-50%);
+            background: rgba(15,23,42,0.95);
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-size: 14px;
+            z-index: 70;
+            display:none;
+        }
+
+        .category-nav button { min-width: 90px; }
+        .category-btn.active { box-shadow: 0 4px 20px rgba(59,130,246,0.12); background: #ffffff !important; font-weight: 600; color: #3b82f6; } /* Highlight active category */
+        .search-focus { border-color: #3b82f6 !important; box-shadow: 0 0 0 3px rgba(59,130,246,0.3) !important; }
+
+        .recent-grid { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+        .recent-tile { 
+            width:40px; height:40px; display:flex; align-items:center; justify-content:center; 
+            border-radius:8px; cursor:pointer; font-size:20px; background:transparent; 
+            transition: transform .12s ease, background .12s ease;
+        }
+        .recent-tile:hover { background: rgba(0,0,0,0.05); transform: scale(1.1); }
+
+
+        @media (max-width:640px){
+            :root{ --tile-size:48px; }
+            .category-nav button { min-width: 70px; padding:6px 10px; font-size:13px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="glass fixed top-0 left-0 right-0 h-16 flex items-center justify-between px-4 md:px-8 z-50">
+        <div class="flex items-center space-x-3">
+            <img src="faviconnob.png" alt="Aivorize" class="w-8 h-8 rounded-lg shadow-sm" />
+            <a href="index.html" class="text-lg font-extrabold text-gray-900 hover:text-blue-600">Aivorize</a>
+        </div>
+        <div class="flex items-center gap-3">
+            <button id="shareBtn" title="Share this picker" class="px-3 py-1 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-sm inline-flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M13 5.828V3h-2v4h4V5.828A6 6 0 1012 19a6.02 6.02 0 004.472-1.86l1.414 1.414A8 8 0 1113 5.828z"/></svg>
+                Share
+            </button>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto pt-24 pb-20 px-4 md:px-6">
+
+        <section class="text-center mb-6">
+            <h1 class="text-3xl md:text-4xl font-extrabold gradient-text mb-2">Emoji Picker</h1>
+            <p class="text-gray-600">Native emojis, search, categories, copy on tap/click and hold 4s to view description. Recent are saved locally.</p>
+        </section>
+
+        <div class="grid gap-6 md:grid-cols-1">
+            <div class="glass p-5">
+
+                <div class="flex flex-col md:flex-row items-center gap-3 md:justify-between mb-4">
+                    <input id="search" type="search" placeholder="Search emoji (name or symbol)" class="w-full md:w-2/3 border border-gray-200 rounded-xl p-3 focus:outline-none focus:search-focus transition" />
+                    <div class="flex gap-2 items-center category-nav overflow-x-auto pb-1">
+                        <button data-cat="all" class="category-btn bg-white/70 py-2 px-4 rounded-lg text-sm">All</button>
+                        </div>
+                </div>
+
+                <div class="mb-6 border-b border-gray-200 pb-4">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-sm font-semibold text-gray-700">Recent</h3>
+                        <button id="clearRecent" class="text-xs text-gray-500 hover:text-red-500 transition">Clear All</button>
+                    </div>
+                    <div id="recentList" class="recent-grid"></div>
+                </div>
+
+                <div id="emojiContainer" class="space-y-8"></div>
+
+            </div>
+        </div>
+    </main>
+
+    <div id="smallToast" class="small-toast">Copied</div>
+
+    <div id="tooltip" class="tooltip" style="display:none"></div>
+    <footer class="bg-white border-t border-gray-200 mt-20">
+    
+        <div class="max-w-7xl mx-auto px-6 sm:px-8 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+
+                <div>
+                    <div class="flex items-center space-x-3 mb-5">
+                        <img src="faviconnob.png" alt="Aivorize Logo" class="w-8 h-8 rounded-lg shadow-sm">
+                        <h2 class="text-base font-semibold text-gray-900">Aivorize</h2>
+                    </div>
+                    <p class="text-sm text-gray-600 leading-relaxed">
+                        Aivorize is your premium hub for free online tools, calculators, and productivity utilities — crafted for speed, simplicity, and elegance.
+                    </p>
+                    <p class="mt-5 text-sm text-gray-600">
+                        Designed & built by 
+                        <a href="https://kaifurrehman.netlify.app/" target="_blank" class="text-blue-600 font-medium hover:underline">
+                            Kaif ur Rehman
+                        </a>.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 mb-4">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="about.html" class="text-sm text-gray-600 hover:text-blue-600 hover:underline transition-colors duration-150">About</a></li>
+                        <li><a href="privacy.html" class="text-sm text-gray-600 hover:text-blue-600 hover:underline transition-colors duration-150">Privacy Policy</a></li>
+                        <li><a href="terms.html" class="text-sm text-gray-600 hover:text-blue-600 hover:underline transition-colors duration-150">Terms & Conditions</a></li>
+                        <li><a href="learn.html" class="text-sm text-gray-600 hover:text-blue-600 hover:underline transition-colors duration-150">Learn</a></li>
+                        <li><a href="contact.html" class="text-sm text-gray-600 hover:text-blue-600 hover:underline transition-colors duration-150">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 mb-4">Follow Aivorize</h3>
+                    <div class="flex space-x-4 text-xl text-gray-500">
+                        <a href="https://www.youtube.com/@aivorize" target="_blank" class="hover:text-red-600 transition-colors duration-150" aria-label="Aivorize on YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://www.instagram.com/aivorize" target="_blank" class="hover:text-pink-600 transition-colors duration-150" aria-label="Aivorize on Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@aivorizeofficial" target="_blank" class="hover:text-black transition-colors duration-150" aria-label="Aivorize on TikTok">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 mb-4">Follow Kaif</h3>
+                    <div class="flex space-x-4 text-xl text-gray-500">
+                        <a href="https://www.youtube.com/@kaif-ur-rehman" target="_blank" class="hover:text-red-600 transition-colors duration-150" aria-label="Kaif ur Rehman on YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://www.instagram.com/kaif.ur.rehman" target="_blank" class="hover:text-pink-600 transition-colors duration-150" aria-label="Kaif ur Rehman on Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@kaif.urrehman" target="_blank" class="hover:text-black transition-colors duration-150" aria-label="Kaif ur Rehman on TikTok">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="border-t border-gray-200 mt-12 py-6">
+            <div class="max-w-7xl mx-auto px-6 sm:px-8 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-500">
+                <p>&copy; <span id="currentYear"></span> Aivorize. All rights reserved.</p>
+                <p class="mt-2 sm:mt-0">
+                    Crafted with ❤️ by <a href="https://kaifurrehman.netlify.app/" target="_blank" class="text-blue-600 hover:underline font-medium">Kaif ur Rehman</a>
+                </p>
+            </div>
+        </div>
+        
+    </footer>
+
+    <script>
+        document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+        // ---------- Data (trimmed repetition kept from your list; expand if needed) ----------
+        const EMOJI_DATA = {
+            "Smileys & People": [
+                {emoji: "😀", name:"grinning face"}, {emoji:"😃", name:"smiling face with open mouth"},
+                {emoji:"😄", name:"smiling face with open mouth and smiling eyes"}, {emoji:"😁", name:"beaming face with smiling eyes"},
+                {emoji:"😆", name:"grinning squinting face"}, {emoji:"😅", name:"grinning face with sweat"},
+                {emoji:"😂", name:"face with tears of joy"}, {emoji:"🤣", name:"rolling on the floor laughing"},
+                {emoji:"😊", name:"smiling face with smiling eyes"}, {emoji:"😇", name:"smiling face with halo"},
+                {emoji:"🙂", name:"slightly smiling face"}, {emoji:"🙃", name:"upside-down face"},
+                {emoji:"😉", name:"winking face"}, {emoji:"😌", name:"relieved face"},
+                {emoji:"😍", name:"smiling face with heart-eyes"}, {emoji:"🥰", name:"smiling face with hearts"},
+                {emoji:"😘", name:"face blowing a kiss"}, {emoji:"😗", name:"kissing face"},
+                {emoji:"😙", name:"kissing face with smiling eyes"}, {emoji:"😚", name:"kissing face with closed eyes"},
+                {emoji:"😋", name:"face savoring food"}, {emoji:"😛", name:"face with tongue"},
+                {emoji:"😝", name:"squinting face with tongue"}, {emoji:"😜", name:"winking face with tongue"},
+                {emoji:"🤪", name:"zany face"}, {emoji:"🤨", name:"face with raised eyebrow"},
+                {emoji:"🧐", name:"face with monocle"}, {emoji:"🤓", name:"nerd face"},
+                {emoji:"😎", name:"smiling face with sunglasses"}, {emoji:"🤩", name:"star-struck"},
+                {emoji:"🥳", name:"partying face"}, {emoji:"😏", name:"smirking face"},
+                {emoji:"😒", name:"unamused face"}, {emoji:"😞", name:"disappointed face"},
+                {emoji:"😔", name:"pensive face"}, {emoji:"😟", name:"worried face"},
+                {emoji:"😕", name:"confused face"}, {emoji:"🙁", name:"slightly frowning face"},
+                {emoji:"☹️", name:"frowning face"}, {emoji:"😣", name:"persevering face"},
+                {emoji:"😖", name:"confounded face"}, {emoji:"😫", name:"tired face"},
+                {emoji:"😩", name:"weary face"}, {emoji:"🥺", name:"pleading face"},
+                {emoji:"😢", name:"crying face"}, {emoji:"😭", name:"loudly crying face"},
+                {emoji:"😤", name:"face with steam from nose"}, {emoji:"😠", name:"angry face"},
+                {emoji:"😡", name:"pouting face"}, {emoji:"🤬", name:"face with symbols on mouth"},
+                {emoji:"🤯", name:"exploding head"}, {emoji:"😳", name:"flushed face"},
+                {emoji:"🥵", name:"hot face"}, {emoji:"🥶", name:"cold face"},
+                {emoji:"😱", name:"face screaming in fear"}, {emoji:"😨", name:"fearful face"},
+                {emoji:"😰", name:"anxious face with sweat"}, {emoji:"😥", name:"sad but relieved face"},
+                {emoji:"😓", name:"downcast face with sweat"}, {emoji:"🤗", name:"hugging face"},
+                {emoji:"🤔", name:"thinking face"}, {emoji:"🤭", name:"face with hand over mouth"},
+                {emoji:"🤫", name:"shushing face"}, {emoji:"🤥", name:"lying face"},
+                {emoji:"😶", name:"face without mouth"}, {emoji:"😐", name:"neutral face"},
+                {emoji:"😑", name:"expressionless face"}, {emoji:"😬", name:"grimacing face"},
+                {emoji:"🙄", name:"face with rolling eyes"}, {emoji:"😯", name:"hushed face"},
+                {emoji:"😦", name:"frowning face with open mouth"}, {emoji:"😧", name:"anguished face"},
+                {emoji:"😮", name:"face with open mouth"}, {emoji:"😲", name:"astonished face"},
+                {emoji:"🥱", name:"yawning face"}, {emoji:"😴", name:"sleeping face"},
+                {emoji:"🤤", name:"drooling face"}, {emoji:"😪", name:"sleepy face"},
+                {emoji:"😵", name:"dizzy face"}, {emoji:"🤐", name:"zipper-mouth face"},
+                {emoji:"🥴", name:"woozy face"}, {emoji:"🤢", name:"nauseated face"},
+                {emoji:"🤮", name:"face vomiting"}, {emoji:"🤧", name:"sneezing face"},
+                {emoji:"😷", name:"face with medical mask"}, {emoji:"🤒", name:"face with thermometer"},
+                {emoji:"🤕", name:"face with head-bandage"}, {emoji:"🤑", name:"money-mouth face"},
+                {emoji:"🤠", name:"cowboy hat face"}, {emoji:"😈", name:"smiling face with horns"},
+                {emoji:"👿", name:"angry face with horns"}, {emoji:"👹", name:"ogre"},
+                {emoji:"👺", name:"goblin"}, {emoji:"🤡", name:"clown face"},
+                {emoji:"💩", name:"pile of poo"}, {emoji:"👻", name:"ghost"},
+                {emoji:"💀", name:"skull"}, {emoji:"☠️", name:"skull and crossbones"},
+                {emoji:"👽", name:"alien"}, {emoji:"👾", name:"alien monster"},
+                {emoji:"🤖", name:"robot"}, {emoji:"🎃", name:"jack-o-lantern"}
+            ],
+            "Animals & Nature": [
+                {emoji:"🐶", name:"dog face"}, {emoji:"🐱", name:"cat face"},
+                {emoji:"🐭", name:"mouse face"}, {emoji:"🐹", name:"hamster face"},
+                {emoji:"🐰", name:"rabbit face"}, {emoji:"🦊", name:"fox face"},
+                {emoji:"🐻", name:"bear face"}, {emoji:"🐼", name:"panda face"},
+                {emoji:"🐨", name:"koala"}, {emoji:"🐯", name:"tiger face"},
+                {emoji:"🦁", name:"lion face"}, {emoji:"🐮", name:"cow face"},
+                {emoji:"🐷", name:"pig face"}, {emoji:"🐸", name:"frog face"},
+                {emoji:"🐵", name:"monkey face"}, {emoji:"🐔", name:"chicken"},
+                {emoji:"🐧", name:"penguin"}, {emoji:"🐦", name:"bird"},
+                {emoji:"🐤", name:"baby chick"}, {emoji:"🐣", name:"hatching chick"},
+                {emoji:"🐥", name:"front-facing baby chick"}, {emoji:"🦆", name:"duck"},
+                {emoji:"🦅", name:"eagle"}, {emoji:"🦉", name:"owl"},
+                {emoji:"🦇", name:"bat"}, {emoji:"🐺", name:"wolf"},
+                {emoji:"🐗", name:"boar"}, {emoji:"🐴", name:"horse face"},
+                {emoji:"🦄", name:"unicorn face"}, {emoji:"🐝", name:"honeybee"},
+                {emoji:"🐛", name:"bug"}, {emoji:"🦋", name:"butterfly"},
+                {emoji:"🐌", name:"snail"}, {emoji:"🐞", name:"lady beetle"},
+                {emoji:"🐜", name:"ant"}, {emoji:"🦗", name:"cricket"},
+                {emoji:"🕷️", name:"spider"}, {emoji:"🦂", name:"scorpion"},
+                {emoji:"🐢", name:"turtle"}, {emoji:"🐍", name:"snake"},
+                {emoji:"🦎", name:"lizard"}, {emoji:"🦖", name:"T-Rex"},
+                {emoji:"🦕", name:"sauropod"}, {emoji:"🐙", name:"octopus"},
+                {emoji:"🦑", name:"squid"}, {emoji:"🦐", name:"shrimp"},
+                {emoji:"🦞", name:"lobster"}, {emoji:"🦀", name:"crab"},
+                {emoji:"🐡", name:"blowfish"}, {emoji:"🐠", name:"tropical fish"},
+                {emoji:"🐟", name:"fish"}, {emoji:"🐬", name:"dolphin"},
+                {emoji:"🐳", name:"spouting whale"}, {emoji:"🐋", name:"whale"},
+                {emoji:"🦈", name:"shark"}, {emoji:"🐊", name:"crocodile"},
+                {emoji:"🐅", name:"tiger"}, {emoji:"🐆", name:"leopard"},
+                {emoji:"🦓", name:"zebra"}, {emoji:"🦍", name:"gorilla"},
+                {emoji:"🐘", name:"elephant"}, {emoji:"🦧", name:"orangutan"},
+                {emoji:"🐪", name:"dromedary camel"}, {emoji:"🐫", name:"two-hump camel"},
+                {emoji:"🦒", name:"giraffe"}, {emoji:"🐃", name:"water buffalo"},
+                {emoji:"🐂", name:"ox"}, {emoji:"🐄", name:"cow"},
+                {emoji:"🐎", name:"horse"}, {emoji:"🐖", name:"pig"},
+                {emoji:"🐐", name:"goat"}, {emoji:"🐏", name:"ram"},
+                {emoji:"🐑", name:"sheep"}, {emoji:"🐕", name:"dog"},
+                {emoji:"🐩", name:"poodle"}, {emoji:"🦮", name:"guide dog"},
+                {emoji:"🐕‍🦺", name:"service dog"}, {emoji:"🐈", name:"cat"},
+                {emoji:"🐓", name:"rooster"}, {emoji:"🦃", name:"turkey"},
+                {emoji:"🦚", name:"peacock"}, {emoji:"🦜", name:"parrot"},
+                {emoji:"🦢", name:"swan"}, {emoji:"🦩", name:"flamingo"},
+                {emoji:"🕊️", name:"dove"}, {emoji:"🐇", name:"rabbit"},
+                {emoji:"🐁", name:"mouse"}, {emoji:"🐀", name:"rat"},
+                {emoji:"🐿️", name:"chipmunk"}, {emoji:"🦔", name:"hedgehog"}
+            ],
+            "Food & Drink": [
+                {emoji:"🍏", name:"green apple"}, {emoji:"🍎", name:"red apple"},
+                {emoji:"🍐", name:"pear"}, {emoji:"🍊", name:"tangerine"},
+                {emoji:"🍋", name:"lemon"}, {emoji:"🍌", name:"banana"},
+                {emoji:"🍉", name:"watermelon"}, {emoji:"🍇", name:"grapes"},
+                {emoji:"🍓", name:"strawberry"}, {emoji:"🫐", name:"blueberries"},
+                {emoji:"🍈", name:"melon"}, {emoji:"🍒", name:"cherries"},
+                {emoji:"🍑", name:"peach"}, {emoji:"🥭", name:"mango"},
+                {emoji:"🍍", name:"pineapple"}, {emoji:"🥥", name:"coconut"},
+                {emoji:"🥝", name:"kiwi fruit"}, {emoji:"🍅", name:"tomato"},
+                {emoji:"🍆", name:"eggplant"}, {emoji:"🥑", name:"avocado"},
+                {emoji:"🥦", name:"broccoli"}, {emoji:"🥬", name:"leafy green"},
+                {emoji:"🥒", name:"cucumber"}, {emoji:"🌶️", name:"hot pepper"},
+                {emoji:"🌽", name:"ear of corn"}, {emoji:"🥕", name:"carrot"},
+                {emoji:"🧄", name:"garlic"}, {emoji:"🧅", name:"onion"},
+                {emoji:"🥔", name:"potato"}, {emoji:"🍠", name:"roasted sweet potato"},
+                {emoji:"🥐", name:"croissant"}, {emoji:"🍞", name:"bread"},
+                {emoji:"🥖", name:"baguette bread"}, {emoji:"🧀", name:"cheese wedge"},
+                {emoji:"🥚", name:"egg"}, {emoji:"🍳", name:"cooking"},
+                {emoji:"🥓", name:"bacon"}, {emoji:"🥩", name:"cut of meat"},
+                {emoji:"🍗", name:"poultry leg"}, {emoji:"🍖", name:"meat on bone"},
+                {emoji:"🌭", name:"hot dog"}, {emoji:"🍔", name:"hamburger"},
+                {emoji:"🍟", name:"french fries"}, {emoji:"🥪", name:"sandwich"},
+                {emoji:"🌮", name:"taco"}, {emoji:"🌯", name:"burrito"},
+                {emoji:"🥗", name:"green salad"}, {emoji:"🥫", name:"canned food"},
+                {emoji:"🍝", name:"spaghetti"}, {emoji:"🍜", name:"steaming bowl"},
+                {emoji:"🍲", name:"pot of food"}, {emoji:"🍛", name:"curry rice"},
+                {emoji:"🍣", name:"sushi"}, {emoji:"🍱", name:"bento box"},
+                {emoji:"🥟", name:"dumpling"}, {emoji:"🍤", name:"fried shrimp"},
+                {emoji:"🍙", name:"rice ball"}, {emoji:"🍚", name:"cooked rice"},
+                {emoji:"🍘", name:"rice cracker"}, {emoji:"🍥", name:"fish cake with swirl"},
+                {emoji:"🥠", name:"fortune cookie"}, {emoji:"🥡", name:"takeout box"},
+                {emoji:"🍢", name:"oden"}, {emoji:"🍡", name:"dango"},
+                {emoji:"🍧", name:"shaved ice"}, {emoji:"🍨", name:"ice cream"},
+                {emoji:"🍦", name:"soft ice cream"}, {emoji:"🥧", name:"pie"},
+                {emoji:"🍰", name:"shortcake"}, {emoji:"🎂", name:"birthday cake"},
+                {emoji:"🍮", name:"custard"}, {emoji:"🍭", name:"lollipop"},
+                {emoji:"🍬", name:"candy"}, {emoji:"🍫", name:"chocolate bar"},
+                {emoji:"🍿", name:"popcorn"}, {emoji:"🍩", name:"doughnut"},
+                {emoji:"🍪", name:"cookie"}, {emoji:"🥛", name:"glass of milk"},
+                {emoji:"🧃", name:"beverage box"}, {emoji:"🧉", name:"mate"},
+                {emoji:"🧊", name:"ice"}, {emoji:"🍵", name:"teacup without handle"},
+                {emoji:"☕", name:"hot beverage"}, {emoji:"🍶", name:"sake"},
+                {emoji:"🍺", name:"beer mug"}, {emoji:"🍻", name:"clinking beer mugs"},
+                {emoji:"🥂", name:"clinking glasses"}, {emoji:"🍷", name:"wine glass"},
+                {emoji:"🥃", name:"tumbler glass"}, {emoji:"🍸", name:"cocktail glass"},
+                {emoji:"🍹", name:"tropical drink"}, {emoji:"🍾", name:"bottle with popping cork"},
+                {emoji:"🧴", name:"lotion bottle"}
+            ],
+            "Activities": [
+                {emoji:"⚽", name:"soccer ball"}, {emoji:"🏀", name:"basketball"},
+                {emoji:"🏈", name:"american football"}, {emoji:"⚾", name:"baseball"},
+                {emoji:"🎾", name:"tennis"}, {emoji:"🏐", name:"volleyball"},
+                {emoji:"🏉", name:"rugby football"}, {emoji:"🥏", name:"flying disc"},
+                {emoji:"🎱", name:"billiards"}, {emoji:"🪀", name:"yo-yo"},
+                {emoji:"🏓", name:"ping pong"}, {emoji:"🏸", name:"badminton"},
+                {emoji:"🥅", name:"goal net"}, {emoji:"🏒", name:"ice hockey"},
+                {emoji:"🏑", name:"field hockey"}, {emoji:"🏏", name:"cricket game"},
+                {emoji:"⛳", name:"flag in hole"}, {emoji:"🪁", name:"kite"},
+                {emoji:"🏹", name:"bow and arrow"}, {emoji:"🎣", name:"fishing pole"},
+                {emoji:"🤿", name:"diving mask"}, {emoji:"🎽", name:"running shirt"},
+                {emoji:"🛷", name:"sled"}, {emoji:"🥌", name:"curling stone"},
+                {emoji:"🎿", name:"ski and ski boot"}, {emoji:"🛹", name:"skateboard"},
+                {emoji:"🛼", name:"roller skate"}, {emoji:"🛴", name:"kick scooter"},
+                {emoji:"🚴", name:"bicyclist"}, {emoji:"🚵", name:"mountain bicyclist"},
+                {emoji:"🏇", name:"horse racing"}, {emoji:"🧗", name:"rock climber"},
+                {emoji:"🏂", name:"snowboarder"}, {emoji:"🏋️", name:"weight lifter"},
+                {emoji:"🤼", name:"people wrestling"}, {emoji:"🤸", name:"person cartwheeling"},
+                {emoji:"⛷️", name:"skier"}, {emoji:"🤺", name:"person fencing"},
+                {emoji:"🏌️", name:"person golfing"}
+            ]
+        };
+
+        // ---------- App state ----------
+        const emojiContainer = document.getElementById('emojiContainer');
+        const searchInput = document.getElementById('search');
+        const tooltip = document.getElementById('tooltip');
+        const smallToast = document.getElementById('smallToast');
+        const shareBtn = document.getElementById('shareBtn');
+        const recentList = document.getElementById('recentList');
+        const clearRecentBtn = document.getElementById('clearRecent');
+
+        const RECENT_KEY = 'aivorize_recent_emojis_v1';
+        const RECENT_MAX = 12;
+
+        // Utility: save recent
+        function loadRecent() {
+            try {
+                const raw = localStorage.getItem(RECENT_KEY);
+                return raw ? JSON.parse(raw) : [];
+            } catch (e) { return []; }
+        }
+        function saveRecent(arr) {
+            try { localStorage.setItem(RECENT_KEY, JSON.stringify(arr)); } catch(e){}
+        }
+        function pushRecent(emojiObj) {
+            const arr = loadRecent().filter(e => e.emoji !== emojiObj.emoji);
+            arr.unshift(emojiObj);
+            if (arr.length > RECENT_MAX) arr.pop();
+            saveRecent(arr);
+            renderRecent();
+        }
+        function clearRecent() {
+            localStorage.removeItem(RECENT_KEY);
+            renderRecent();
+        }
+
+        function renderRecent() {
+            recentList.innerHTML = '';
+            const arr = loadRecent();
+            if (!arr.length) {
+                recentList.innerHTML = '<div class="text-sm text-gray-400">No recent picks yet</div>';
+                return;
+            }
+            arr.forEach(item => {
+                const t = document.createElement('div');
+                t.className = 'recent-tile';
+                t.innerText = item.emoji;
+                t.title = item.name;
+                t.addEventListener('click', async (ev) => {
+                    await copyEmoji(item.emoji, item.name, ev.target);
+                    // Re-push to move it to the front of the recent list
+                    pushRecent(item); 
+                });
+                // Added long-press/right-click for description on recent items
+                t.addEventListener('contextmenu', (e) => { e.preventDefault(); showDescription(item.name, e); });
+                
+                let holdTimerRecent = null;
+                const HOLD_MS = 4000;
+                const startHoldRecent = (ev) => {
+                    if (ev.cancelable) ev.preventDefault();
+                    if (holdTimerRecent) clearTimeout(holdTimerRecent);
+                    holdTimerRecent = setTimeout(() => {
+                        showDescription(item.name, ev);
+                    }, HOLD_MS);
+                };
+                const cancelHoldRecent = () => { if (holdTimerRecent) { clearTimeout(holdTimerRecent); holdTimerRecent = null; } };
+
+                t.addEventListener('mousedown', startHoldRecent);
+                t.addEventListener('mouseup', cancelHoldRecent);
+                t.addEventListener('mouseleave', cancelHoldRecent);
+                t.addEventListener('touchstart', startHoldRecent, {passive:false});
+                t.addEventListener('touchend', cancelHoldRecent);
+                t.addEventListener('touchcancel', cancelHoldRecent);
+                
+                recentList.appendChild(t);
+            });
+        }
+
+        // Build categories nav dynamically
+        function buildCategoryNav() {
+            const nav = document.querySelector('.category-nav');
+            nav.innerHTML = '<button data-cat="all" class="category-btn bg-white/70 py-2 px-4 rounded-lg text-sm">All</button>';
+            const keys = Object.keys(EMOJI_DATA);
+            keys.forEach(k => {
+                const btn = document.createElement('button');
+                btn.className = 'category-btn bg-white/50 py-2 px-4 rounded-lg text-sm transition hover:bg-white';
+                btn.dataset.cat = k;
+                // Use a short emoji icon for the button if possible, or just the text
+                let buttonText = k;
+                if(k === "Smileys & People") buttonText = "😀 People";
+                else if(k === "Animals & Nature") buttonText = "🌿 Animals";
+                else if(k === "Food & Drink") buttonText = "🍔 Food";
+                else if(k === "Activities") buttonText = "⚽ Activity";
+                
+                btn.innerText = buttonText;
+                nav.appendChild(btn);
+            });
+            
+            // Set first ('All') button active initially
+            const first = nav.querySelector('[data-cat="all"]');
+            if (first) first.classList.add('active');
+            
+            // wire events
+            nav.querySelectorAll('.category-btn').forEach(b=>{
+                b.addEventListener('click', () => {
+                    document.querySelectorAll('.category-btn').forEach(bb=>bb.classList.remove('active'));
+                    b.classList.add('active');
+                    const cat = b.dataset.cat;
+                    filterEmojis(searchInput.value, cat);
+                    
+                    if (cat !== 'all') {
+                        const id = cat.replace(/\s+/g,'-').toLowerCase();
+                        const el = document.getElementById(id);
+                        // Scroll to the selected category section
+                        if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+                    } else {
+                        // Scroll to the top of the emoji container
+                        emojiContainer.scrollIntoView({behavior:'smooth', block:'start'});
+                    }
+                });
+            });
+        }
+
+        // Create sections & tiles
+        function buildSections() {
+            emojiContainer.innerHTML = '';
+            for (const cat of Object.keys(EMOJI_DATA)) {
+                const section = document.createElement('section');
+                section.id = cat.replace(/\s+/g,'-').toLowerCase();
+                section.className = 'category-section';
+                // header
+                const header = document.createElement('div');
+                header.className = 'flex items-center justify-between mb-3';
+                header.innerHTML = `<h2 class="text-lg font-bold text-gray-800">${cat}</h2>
+                                    <div class="text-sm text-gray-500">${EMOJI_DATA[cat].length} emojis</div>`;
+                // grid
+                const grid = document.createElement('div');
+                grid.className = 'grid gap-3';
+                
+                // add tiles
+                EMOJI_DATA[cat].forEach(item => {
+                    const tile = document.createElement('div');
+                    tile.className = 'emoji-tile';
+                    tile.setAttribute('role','button');
+                    tile.setAttribute('tabindex','0');
+                    tile.innerText = item.emoji;
+
+                    tile.dataset.name = item.name;
+                    tile.dataset.emoji = item.emoji;
+                    tile.dataset.cat = cat;
+
+                    // Click copies the emoji and pushes recent
+                    tile.addEventListener('click', async (ev) => {
+                        // Check if the long press was just canceled
+                        if (tile.hasAttribute('data-holding')) {
+                           tile.removeAttribute('data-holding');
+                           return; // Do not copy if it was a canceled long press
+                        }
+                        await copyEmoji(item.emoji, item.name, ev.target);
+                        pushRecent({ emoji: item.emoji, name: item.name, cat });
+                    });
+
+                    // Long-press (4s) for description — supports touch & mouse
+                    let holdTimer = null;
+                    const HOLD_MS = 4000;
+                    function startHold(ev) {
+                        if (ev.button === 2) return; // Prevent right-click from triggering this
+                        if (ev.cancelable) ev.preventDefault();
+                        if (holdTimer) clearTimeout(holdTimer);
+                        tile.setAttribute('data-holding', 'true'); // Flag to prevent immediate click action
+                        holdTimer = setTimeout(() => {
+                            tile.removeAttribute('data-holding');
+                            showDescription(item.name, ev);
+                        }, HOLD_MS);
+                    }
+                    function cancelHold() { 
+                        if (holdTimer) { 
+                            clearTimeout(holdTimer); 
+                            holdTimer = null; 
+                            tile.removeAttribute('data-holding');
+                        } 
+                    }
+
+                    tile.addEventListener('mousedown', startHold);
+                    tile.addEventListener('mouseup', cancelHold);
+                    tile.addEventListener('mouseleave', cancelHold);
+                    tile.addEventListener('touchstart', startHold, {passive:false});
+                    tile.addEventListener('touchend', cancelHold);
+                    tile.addEventListener('touchcancel', cancelHold);
+                    tile.addEventListener('contextmenu', (e) => { e.preventDefault(); showDescription(item.name, e); });
+
+
+                    // Keyboard accessibility
+                    tile.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter') {
+                            copyEmoji(item.emoji, item.name, tile);
+                            pushRecent({ emoji: item.emoji, name: item.name, cat });
+                        } else if (e.key === ' ') {
+                            e.preventDefault();
+                            showDescription(item.name);
+                        }
+                    });
+
+                    grid.appendChild(tile);
+                });
+
+                section.appendChild(header);
+                section.appendChild(grid);
+                emojiContainer.appendChild(section);
+            }
+            adjustGridColumns();
+        }
+
+        // Responsive columns based on viewport width
+        function adjustGridColumns() {
+            const width = window.innerWidth;
+            // Target column counts for different widths
+            const cols = width < 480 ? 6 : width < 760 ? 8 : width < 1024 ? 10 : 12;
+            const tileSize = getComputedStyle(document.documentElement).getPropertyValue('--tile-size').trim() || '52px';
+            
+            document.querySelectorAll('#emojiContainer .category-section > div.grid').forEach(g=>{
+                g.style.gridTemplateColumns = `repeat(${cols}, ${tileSize})`;
+            });
+        }
+
+        // Copy to clipboard helper & UI feedback
+        async function copyEmoji(emoji, name, targetEl) {
+            try {
+                await navigator.clipboard.writeText(emoji);
+                // Use a short floating "copied" tooltip near the tile for instant feedback
+                if (targetEl) showTooltipAtElement(targetEl, `${emoji} copied`);
+                // Also show the bottom toast for clear confirmation
+                showSmallToast(`Copied: ${emoji}`); 
+            } catch (e) {
+                showSmallToast(`Copy failed. Try manually copying: ${emoji}`);
+            }
+        }
+
+        // Small centered toast
+        let toastTimeout = null;
+        function showSmallToast(text, time = 1400) {
+            if (toastTimeout) clearTimeout(toastTimeout);
+            smallToast.textContent = text;
+            smallToast.style.display = 'block';
+            toastTimeout = setTimeout(()=> smallToast.style.display='none', time);
+        }
+
+        // Tooltip positioned near element (used for short copy confirmation)
+        let tooltipTimeout = null;
+        function showTooltipAtElement(el, text) {
+            if (tooltipTimeout) clearTimeout(tooltipTimeout);
+            tooltip.style.display = 'block';
+            tooltip.textContent = text;
+            const rect = el.getBoundingClientRect();
+            let left = rect.left + rect.width/2;
+            let top = rect.top - 8;
+            // clamp to viewport
+            const pad = 8;
+            left = Math.min(window.innerWidth - pad, Math.max(pad, left));
+            top = Math.max(40, top); // keep below header
+            tooltip.style.left = left + 'px';
+            tooltip.style.top = top + 'px';
+            tooltip.style.transform = 'translate(-50%, -120%)';
+            tooltipTimeout = setTimeout(()=> tooltip.style.display='none', 1400);
+        }
+
+        // Show long description (used for long-press/right-click)
+        function showDescription(desc, ev) {
+            if (tooltipTimeout) clearTimeout(tooltipTimeout);
+            tooltip.style.display = 'block';
+            tooltip.textContent = desc;
+
+            let clientX, clientY;
+            if (ev && ev.touches && ev.touches[0]) {
+                clientX = ev.touches[0].clientX;
+                clientY = ev.touches[0].clientY;
+            } else if (ev && ev.target) {
+                const rect = ev.target.getBoundingClientRect();
+                clientX = rect.left + rect.width / 2;
+                clientY = rect.top - 10;
+            } else {
+                clientX = window.innerWidth / 2;
+                clientY = window.innerHeight / 3;
+            }
+
+            tooltip.style.left = clientX + 'px';
+            tooltip.style.top = clientY + 'px';
+            tooltip.style.transform = 'translate(-50%, -120%)';
+            tooltipTimeout = setTimeout(()=> tooltip.style.display='none', 3200);
+        }
+
+        // ---------- NEW / COMPLETED LOGIC ----------
+        
+        // Main filtering function
+        function filterEmojis(query, activeCat) {
+            const normalizedQuery = query.toLowerCase().trim();
+            const allTiles = document.querySelectorAll('.emoji-tile');
+            const sections = document.querySelectorAll('.category-section');
+            
+            let foundCount = 0;
+
+            allTiles.forEach(tile => {
+                const name = tile.dataset.name.toLowerCase();
+                const emoji = tile.dataset.emoji;
+                const cat = tile.dataset.cat;
+
+                const queryMatch = normalizedQuery === '' || name.includes(normalizedQuery) || emoji.includes(normalizedQuery);
+                const categoryMatch = activeCat === 'all' || cat === activeCat;
+
+                const isVisible = queryMatch && categoryMatch;
+                tile.style.display = isVisible ? 'flex' : 'none';
+                if (isVisible) foundCount++;
+            });
+            
+            // Hide/show category headers based on results
+            sections.forEach(section => {
+                const visibleTiles = section.querySelectorAll('.emoji-tile[style*="flex"]').length;
+                section.style.display = (visibleTiles > 0 && activeCat === 'all') ? 'block' : (section.id === activeCat.replace(/\s+/g,'-').toLowerCase() && visibleTiles > 0) ? 'block' : 'none';
+                
+                // If filtering by category, hide all other headers
+                if (activeCat !== 'all' && section.id !== activeCat.replace(/\s+/g,'-').toLowerCase()) {
+                    section.style.display = 'none';
+                }
+            });
+
+            // Update button active state if searching within 'all' but only one category matches
+            // (Skipped for complexity, keep 'all' button active for general search)
+            
+            // Show a message if nothing is found
+            if (foundCount === 0 && normalizedQuery !== '') {
+                emojiContainer.innerHTML = `<div class="text-center p-8 text-gray-500">No results found for "${query}" in the selected category.</div>`;
+            } else if (emojiContainer.children.length === 0) {
+                 // Restore all sections if they were hidden by a search that was cleared
+                buildSections();
+            }
+        }
+        
+        // Share Functionality
+        shareBtn.addEventListener('click', async () => {
+            const shareData = {
+                title: 'Aivorize Emoji Picker',
+                text: 'Find, search, and quickly copy any emoji. Includes recent history and categories!',
+                url: window.location.href,
+            };
+            try {
+                if (navigator.share) {
+                    await navigator.share(shareData);
+                } else {
+                    await navigator.clipboard.writeText(shareData.url);
+                    showSmallToast('Link copied to clipboard!');
+                }
+            } catch (err) {
+                console.error('Share failed:', err);
+                showSmallToast('Could not share/copy URL.');
+            }
+        });
+
+        // Event Listeners
+        searchInput.addEventListener('input', (e) => {
+            // Get the currently active category
+            const activeCat = document.querySelector('.category-btn.active')?.dataset.cat || 'all';
+            filterEmojis(e.target.value, activeCat);
+        });
+        
+        searchInput.addEventListener('focus', () => searchInput.classList.add('search-focus'));
+        searchInput.addEventListener('blur', () => searchInput.classList.remove('search-focus'));
+        
+        clearRecentBtn.addEventListener('click', clearRecent);
+        window.addEventListener('resize', adjustGridColumns);
+
+        // Initializer
+        function init() {
+            buildCategoryNav();
+            buildSections();
+            renderRecent();
+        }
+
+        init();
+    </script>
+</body>
+</html>
